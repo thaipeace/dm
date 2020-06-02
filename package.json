@@ -35,7 +35,7 @@
     "core-js": "^2.5.4",
     "events": "^3.0.0",
     "highcharts": "^6.1.4",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "ng-contenteditable": "^2.0.2",
     "ng2-bootstrap-modal": "^1.0.1",
     "rxjs": "^6.0.0",
