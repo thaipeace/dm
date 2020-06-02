@@ -1,0 +1,6 @@
+<section class="edge-summary row">
+  <div class="edge-summary__item edge-summary__deployed">Edges deployed: <b>{{edges?.length || '0'}}</b></div>
+  <div class="edge-summary__item edge-summary__active">Active: <b>{{activeEdge?.length ||'0'}}</b></div>
+  <div class="edge-summary__item edge-summary__down">Down: <b>{{edges?.length - activeEdge?.length || '0'}}</b></div>
+  <div class="edge-summary__item edge-summary__alert">Alerts: <b>0</b></div>
+</section>

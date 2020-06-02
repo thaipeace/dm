@@ -1,0 +1,31 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form #userEditForm="ngForm" name="user-edit-form" class="user-edit">
+        <div class="modal-header">
+          <h4 class="modal-title">{{title}}</h4>
+          <button type="button" class="close" (click)="close()" >&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="col-6 form-group float-left user-edit__name no-padding-left required">
+            <label for="userName">Name</label>
+            <input type="text" class="form-control user-edit__name-input" required
+                    name="userName" id="user-edit-name" placeholder="Username"
+                    [(ngModel)]="username">
+          </div>
+          <div class="col-6 form-group float-left user-edit__password no-padding-right required">
+            <label for="password">Password</label>
+            <input type="password" class="form-control user-edit__password-input" 
+                   required autocomplete="new-password"
+                   name="password" id="user-edit-password" placeholder="Password"
+                   [(ngModel)]="password">
+          </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-inline user-edit__actions float-right"
+                [ngClass]="{'user-edit__actions--disabled': userEditForm.form.invalid || userEditForm.form.pristine}">
+              <button class="btn btn-primary" (click)="onSaveUser()">Save</button>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>

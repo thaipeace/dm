@@ -1,0 +1,80 @@
+<section class="edge-list-container">
+  <div class="default-container-header edge-search clearfix">
+    <div class="edge-create edge-create__edge float-left">
+      <button class="tql-button tql-button-blue shadow-sm" (click)="showUpsertEdgeForm(null)">New edge</button>
+    </div>
+    <!-- <div class="edge-create edge-create__region float-left ">
+      <button class="tql-button green shadow-sm disabled-half" (click)="showUpsertEdgeForm(null)">New region
+      </button>
+    </div> -->
+    <div class="edge-reload float-left" (click)="getAllEdge()">
+      <i class="far fa-sync-alt"></i>
+    </div>
+    <div class="edge-sum float-left col-6" *ngIf="originalEdgeList">
+      <app-edge-summary [edges]="originalEdgeList"></app-edge-summary>
+    </div>
+    <form name="edge-search-form" class="col-2 no-horizon-padding float-right">
+      <app-input-search [searchText]="searchText" (onSearchChange)="searchText = $event"></app-input-search>
+    </form>
+    <div class="edge-list__title float-right">
+      <div id="edit-edge-spinner"></div>
+      <span class="edge-list__title-type">
+        <span class="edge-list__title-type-item"
+              [ngClass]="{'edge-list__title-type-item--active': viewType === 'map'}"
+              (click)="onSwitchView('map')">Map</span> |
+        <span class="edge-list__title-type-item"
+              [ngClass]="{'edge-list__title-type-item--active': viewType === 'list'}"
+              (click)="onSwitchView('list')">List</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="edge-list-wrapper default-container-content" id="edge-list-id">
+    <div class="edge-list table-responsive" *ngIf="viewType === 'list'">
+      <table class="tql-table" id="edge-list-id">
+        <thead class="edge-list__header">
+        <tr>
+          <th class="edge-list__header-item">Name</th>
+          <th class="edge-list__header-item">Region</th>
+          <th class="edge-list__header-item">State</th>
+          <th class="edge-list__header-item">Alerts</th>
+        </tr>
+        </thead>
+        <tbody class="edge-list__body">
+        <tr *ngFor="let item of edges|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+            class="edge-list__item" [ngClass]="{'odd': i%2 === 0, 'even': i%2 !== 0}">
+          <td class="edge-list__item-name">
+            <a [routerLink]="['/edges/edge', item.Edge.EdgeId]">{{item.Edge.DisplayName}}</a>
+          </td>
+          <td class="edge-list__item-region">{{item.Edge.Region}}</td>
+          <td class="edge-list__item-state">{{item.Edge.Status || "Down"}}</td>
+          <td class="edge-list__item-state"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="edge-list" *ngIf="viewType === 'map' && edges?.length ">
+      <app-edge-list-map [edges]="edges" [searchText]="searchText"></app-edge-list-map>
+    </div>
+    <div class="col-12 edge-list__paging-wrapper" *ngIf="viewType !== 'map'">
+      <small class="edge-list__paging" *ngIf="originaledgeList?.length !== 0">
+        <span>
+          <strong>{{(originalEdgeList|listBySpecificFields:fieldsValuePairs:searchText)?.length}}</strong> edge(s) found. Displaying 
+          <strong>
+            {{(edges|listBySpecificFields:fieldsValuePairs:searchText)?.length}}
+            /
+            {{(originalEdgeList|listBySpecificFields:fieldsValuePairs:searchText)?.length}}
+          </strong> edge(s).
+        </span>
+        <span class="text-primary edge-list__paging-more" (click)="loadLessMore()"
+              *ngIf="(originalEdgeList|listBySpecificFields:fieldsValuePairs:searchText)?.length > listLimitCountDefault">
+            <span
+              *ngIf="(edges|listBySpecificFields:fieldsValuePairs:searchText)?.length < (originalEdgeList|listBySpecificFields:fieldsValuePairs:searchText)?.length">Load More</span>
+            <span
+              *ngIf="(edges|listBySpecificFields:fieldsValuePairs:searchText)?.length >= (originalEdgeList|listBySpecificFields:fieldsValuePairs:searchText)?.length">Less</span>
+        </span>
+      </small>
+    </div>
+  </div>
+
+</section>

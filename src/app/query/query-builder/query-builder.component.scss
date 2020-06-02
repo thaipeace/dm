@@ -1,0 +1,12 @@
+.query-edit {
+    &__actions {
+        &--disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        button + button {
+            margin-left: 15px; 
+        }
+    }
+}

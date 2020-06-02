@@ -1,0 +1,19 @@
+.header {
+    //&__logo {
+    //    background:url("/assets/images/globallogo.png") 0 0 no-repeat;
+    //    background-size: cover;
+    //    width: 60px;
+    //    height: 60px;
+    //    float: left;
+    //}
+
+    &__site-name {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+        //background-color: #d03127;
+        color: #fff;
+        //padding: 0 20px;
+    }
+}

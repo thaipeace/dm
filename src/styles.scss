@@ -1,0 +1,101 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~src/sass/tql/tqlsampleui";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~src/sass/custom_variables';
+
+html {
+  overflow-y: hidden;
+}
+
+.tql-table {
+  a {
+    text-decoration: underline !important;
+  }
+}
+
+.tql-form-group {
+  &.required {
+    label {
+      &::after{
+        content: " *";
+        color: red;
+      }
+    }
+  }  
+}
+
+.details-panel {
+  height: calc(100vh - 150px);
+  overflow: hidden;
+  .details-panel-header {
+    background: #002630;
+    color: #fff;
+    position: relative;
+    padding: 15px;
+
+    &__title {
+      label {
+        font-size: 80%;
+        opacity: 0.5;
+      }
+    }
+
+    &__action-container {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+    }
+
+    &__action-button {
+      font-size: 80%;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    &__item-action {
+      font-size: 80%;
+      cursor: pointer;
+      a {
+        display: block;
+      }
+    }
+
+    &__status {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+  }
+
+  .details-panel-body {
+    //padding: 30px;
+    height: calc(100% - 75px);
+    position: relative;
+    overflow: auto;
+    &__menu-container {
+      padding: 30px 10px 0 20px;
+    }
+    &__menu-item {
+      //line-height: 40px;
+      cursor: pointer;
+      padding-bottom: 15px;
+
+      &.active,
+      &:hover {
+        text-decoration: underline
+      }
+    }
+
+    &__main-content {
+      width: 100%;
+      //height: 100%;
+      padding: 25px 0px 10px 0px;
+    }
+  }
+
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

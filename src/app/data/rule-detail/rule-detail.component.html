@@ -1,0 +1,349 @@
+<section class="container">
+  <div class="default-container-content" id="rule-detail-id">
+    <form #ruleEditForm="ngForm" name="ruleEditForm" *ngIf="selectedRule"
+          class="rule-edit tql-form col-12 d-flex flex-column justify-content-between h-100">
+      <div class="row no-gutter main h-100 overflow-y-scroll justify-content-center">
+        <div class="col-8">
+          <div class="row no-gutter">
+            <div class="col-12 mb-3">
+              <div class="row no-gutter">
+                <div class="col-6">
+                  <div class="tql-form-group required">
+                    <label for="ruleName" class="col-12 col-form-label no-horizon-padding">Name</label>
+                    <input type="text" class="col-12 form-control" name="ruleName" required
+                           [(ngModel)]="selectedRule.RuleName" #ruleName="ngModel">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="tql-form-group required">
+                    <label for="ruleType" class="col-12 col-form-label no-horizon-padding">Type</label>
+                    <select name="ruleType" class="col-12 form-control" required [(ngModel)]="selectedRule.RuleType"
+                            #ruleType="ngModel">
+                      <option value="">Select</option>
+                      <option value="Replication">Replication</option>
+                      <!-- <option value="Retention">Retention</option> -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="row no-gutter">
+                <div *ngIf="selectedRule.RuleType === 'Replication'" class="col-12">
+                  <div class="row no-gutter justify-content-center align-items-center mb-4 h6 text-center text-secondary">
+                    <div class="col-3 d-flex justify-content-center align-items-center"
+                         [ngClass]="{'step-active': currentTap === 'destination'}">
+                      <span class="number-round">
+                        <span *ngIf="!tabType.destination.done">1</span>
+                        <i class="far fa-check" *ngIf="tabType.destination.done"></i>
+                      </span>
+                      <span>Destination</span>
+                    </div>
+                    <div class="col-3 d-flex justify-content-center align-items-center"
+                         [ngClass]="{'step-active': currentTap === 'frequency'}">
+                      <span class="number-round">
+                        <span *ngIf="!tabType.frequency.done">2</span>
+                        <i class="far fa-check" *ngIf="tabType.frequency.done"></i>
+                      </span>
+                      <span>Frequency</span>
+                    </div>
+                    <div class="col-3 d-flex justify-content-center align-items-center"
+                         [ngClass]="{'step-active': currentTap === 'retentionPeriod'}">
+                      <span class="number-round">
+                        <span *ngIf="!tabType.retentionPeriod.done">3</span>
+                        <i class="far fa-check" *ngIf="tabType.retentionPeriod.done"></i>
+                      </span>
+                      <span>Retention Period</span>
+                    </div>
+                    <div class="col-3 d-flex justify-content-center align-items-center"
+                         [ngClass]="{'step-active': currentTap === 'review'}">
+                      <span class="number-round">
+                        <span *ngIf="!tabType.review.done">4</span>
+                        <i class="far fa-check" *ngIf="tabType.review.done"></i>
+                      </span>
+                      <span>Review</span>
+                    </div>
+                  </div>
+
+                  <div class="row no-gutter" *ngIf="currentTap === 'destination'">
+                    <div class="col-12">
+                      <div class="row no-gutter">
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="destinationType" class="col-12 col-form-label no-horizon-padding">Choose the destination</label>
+                            <select name="destinationType" class="col-12 form-control" required #ruleType="ngModel"
+                                    (change)="onChangeDestinationType(event)" [(ngModel)]="selectedRule.DestinationType">
+                              <option value="">Select</option>
+                              <option value="S3ConnectInfo">S3</option>
+                              <!-- <option value="JDBCConnectInfo">JDBC</option>
+                              <option value="Kafka">Kafka</option> -->
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row no-gutter" *ngIf="selectedRule.DestinationType === 'S3ConnectInfo'">
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="accessKey" class="col-12 col-form-label no-horizon-padding">AccessKey</label>
+                            <input type="text" class="col-12 form-control" name="accessKey" required
+                                   [(ngModel)]="selectedRule.TargetConnectInfo.AccessKey" #accessKey="ngModel">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="secKey" class="col-12 col-form-label no-horizon-padding">SecKey</label>
+                            <input type="text" class="col-12 form-control" name="secKey" required
+                                   [(ngModel)]="selectedRule.TargetConnectInfo.SecretKey" #secKey="ngModel">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="bucketId" class="col-12 col-form-label no-horizon-padding">BucketId</label>
+                            <input type="text" class="col-12 form-control" name="bucketId" required
+                                   [(ngModel)]="selectedRule.TargetConnectInfo.BucketId" #bucketId="ngModel">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row no-gutter" *ngIf="selectedRule.DestinationType === 'JDBCConnectInfo'">
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="urlJDBC" class="col-12 col-form-label no-horizon-padding">URL</label>
+                            <input type="url" class="col-12 form-control" name="urlJDBC" required
+                                    [(ngModel)]="selectedRule.TargetConnectInfo.Url" #urlJDBC="ngModel">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="username" class="col-12 col-form-label no-horizon-padding">Username</label>
+                            <input type="text" class="col-12 form-control" name="username" required
+                                    [(ngModel)]="selectedRule.TargetConnectInfo.Username" #username="ngModel">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="password" class="col-12 col-form-label no-horizon-padding">Password</label>
+                            <input type="password" class="col-12 form-control" name="passwordJDBC" required
+                                    [(ngModel)]="selectedRule.TargetConnectInfo.Password" #passwordJDBC="ngModel">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row no-gutter" *ngIf="selectedRule.DestinationType === 'Kafka'">
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="brokers" class="col-12 col-form-label no-horizon-padding">Brokers</label>
+                            <input type="text" class="col-12 form-control" name="brokers" required
+                                    [(ngModel)]="selectedRule.TargetConnectInfo.Brokers" #brokers="ngModel">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="username" class="col-12 col-form-label no-horizon-padding">Username</label>
+                            <input type="text" class="col-12 form-control" name="username" required
+                                    [(ngModel)]="selectedRule.TargetConnectInfo.Username" #username="ngModel">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="tql-form-group required">
+                            <label for="password" class="col-12 col-form-label no-horizon-padding">Password</label>
+                            <input type="password" class="col-12 form-control" name="passwordKafka" required
+                                    [(ngModel)]="selectedRule.TargetConnectInfo.Password" #passwordKafka="ngModel">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row no-gutter" *ngIf="currentTap === 'frequency'">
+                    <div class="col-12">
+                      <div class="row no-gutter">
+                        <div class="col-12">When to replicate?</div>
+                      </div>
+                      <div class="row no-gutter align-items-center py-4">
+                        <div class="col-3">
+                          <label class="font-weight-bold m-0">
+                            <input type="radio" name="frequencyOption" value="true" class="mr-1" required
+                              [(ngModel)]="selectedRule.FrequencyInfo.OnChange" #frequencyOption="ngModel">On Change
+                          </label>
+                        </div>
+                        <div class="col-9">--- Or ---</div>
+                      </div>
+                      <div class="row no-gutter">
+                        <div class="col-3">
+                          <label class="py-2 font-weight-bold">
+                            <input type="radio" name="frequencyOption" value="false" class="mr-1" required
+                              [(ngModel)]="selectedRule.FrequencyInfo.OnChange" #frequencyOption="ngModel">Every
+                          </label>
+                        </div>
+                        <div class="col-5">
+                          <div class="tql-form-group">
+                            <input type="number" class="form-control" name="frequenceEvery" 
+                              placeholder="Enter a value" required min="1"
+                              [(ngModel)]="selectedRule.FrequencyInfo.Interval.Time" #frequenceEvery="ngModel"
+                              [disabled]="frequencyOption.value === 'true' || !frequencyOption.value">
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div class="tql-form-group">
+                            <select name="frequenceUnit" class="col-12 form-control" required
+                              [(ngModel)]="selectedRule.FrequencyInfo.Interval.Unit"
+                              [disabled]="frequencyOption.value === 'true' || !frequencyOption.value"
+                              #frequenceUnit="ngModel">
+                              <option value="">Select the time metric</option>
+                              <option value="sec">sec</option>
+                              <option value="min">min</option>
+                              <option value="hour">hour</option>
+                              <option value="day">day</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row no-gutter" *ngIf="currentTap === 'retentionPeriod'">
+                      <div class="col-12">
+                        <div class="row no-gutter h6"><div class="col-12">Post Replication</div></div>
+                        <div class="row no-gutter align-items-center py-3">
+                          <div class="col-4">
+                            <label class="font-weight-bold m-0">
+                              <input type="radio" name="deleteType" value="Immediately" class="mr-1" required
+                                [(ngModel)]="selectedRule.RetentionPolicyInfo.DeleteFor" #deleteType="ngModel">
+                                Delete data immediately
+                            </label>
+                          </div>
+                          <div class="col-8">--- Or ---</div>
+                        </div>
+                        <div class="row no-gutter">
+                          <div class="col-12">
+                            <div class="row no-gutter">
+                              <div class="col-4">
+                                <label class="py-2 font-weight-bold">
+                                  <input type="radio" name="deleteType" value="After" class="mr-1" required
+                                         [(ngModel)]="selectedRule.RetentionPolicyInfo.DeleteFor" #deleteType="ngModel">Delete After
+                                </label>
+                              </div>
+                              <div class="col-4">
+                                <div class="tql-form-group">
+                                  <input type="number" class="form-control" name="deleteEvery" placeholder="Enter a value" required
+                                    [(ngModel)]="selectedRule.RetentionPolicyInfo.Interval.Time" #deleteEvery="ngModel"
+                                    [disabled]="deleteType.value !== 'After' || !deleteType.value" min="1">
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <div class="tql-form-group">
+                                  <select name="deleteUnit" class="col-12 form-control" required
+                                    [(ngModel)]="selectedRule.RetentionPolicyInfo.Interval.Unit"
+                                    [disabled]="deleteType.value !== 'After' || !deleteType.value"
+                                    #deleteUnit="ngModel">
+                                    <option value="">Select the time metric</option>
+                                    <option value="sec">sec</option>
+                                    <option value="min">min</option>
+                                    <option value="hour">hour</option>
+                                    <option value="day">day</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row no-gutter">
+                              <div class="col-4">
+                                <label class="py-2 font-weight-bold">
+                                  <input type="radio" name="deleteType" value="Never" class="mr-1" required
+                                    [(ngModel)]="selectedRule.RetentionPolicyInfo.DeleteFor" #deleteType="ngModel">Do not Delete
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="row no-gutter" *ngIf="currentTap === 'review'">
+                    <div class="col-12">
+                      <div class="row no-gutter align-items-center">
+                        <div class="col-11">
+                          <div class="h6 col-12">Destination</div>
+                          <div class="col-12">
+                            <div>{{selectedRule.DestinationType}}</div>
+                            <span *ngFor="let value of targetConnectInfoValues; let i=index">
+                              {{i !== 0 ? '/' : ''}}{{value}}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-1" (click)="currentTap='destination'"><i class="far fa-edit cursor-pointer"></i></div>
+                      </div>
+                      <div class="row no-gutter"><div class="col-12"><hr/></div></div>
+                      <div class="row no-gutter align-items-center">
+                        <div class="col-11">
+                          <div class="h6 col-12">Frequency</div>
+                          <div class="col-12">
+                            {{selectedRule.FrequencyInfo.OnChange === 'false' ? 'Every' : 'On Change'}}
+                            {{selectedRule.FrequencyInfo.OnChange === 'false' ? (': ' + selectedRule.FrequencyInfo.Interval.Time + ' ' + selectedRule.FrequencyInfo.Interval.Unit) : ''}}
+                          </div>
+                        </div>
+                        <div class="col-1" (click)="currentTap='frequency'"><i class="far fa-edit cursor-pointer"></i></div>
+                      </div>
+                      <div class="row no-gutter"><div class="col-12"><hr/></div></div>
+                      <div class="row no-gutter align-items-center">
+                        <div class="col-11">
+                          <div class="h6 col-12">Retention Period</div>
+                          <div class="col-12">
+                            Delete {{selectedRule.RetentionPolicyInfo.DeleteFor}}
+                            {{selectedRule.RetentionPolicyInfo.DeleteFor === 'After' ? (selectedRule.RetentionPolicyInfo.Interval.Time + ' ' + selectedRule.RetentionPolicyInfo.Interval.Unit) : ''}}
+                          </div>
+                        </div>
+                        <div class="col-1" (click)="currentTap='retentionPeriod'"><i class="far fa-edit cursor-pointer"></i></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="selectedRule.RuleType === 'Retention'" class="col-12">
+                  <div class="row no-gutter">
+                    <div class="col-3">
+                      <label class="py-2 font-weight-bold">
+                        Retain for
+                      </label>
+                    </div>
+                    <div class="col-5">
+                      <div class="tql-form-group">
+                        <input type="number" class="form-control" name="retainForEvery" placeholder="Enter a value" required
+                          [(ngModel)]="selectedRule.RetentionPolicyInfo.Interval.Time" #retainForEvery="ngModel" min="1">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="tql-form-group">
+                        <select name="retainForUnit" class="col-12 form-control" required
+                          [(ngModel)]="selectedRule.RetentionPolicyInfo.Interval.Unit"
+                          #retainForUnit="ngModel">
+                          <option value="">Select the time metric</option>
+                          <option value="sec">sec</option>
+                          <option value="min">min</option>
+                          <option value="hour">hour</option>
+                          <option value="day">day</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row no-gutter justify-content-center">
+        <div class="col-8 justify-self-start align-self-end">
+          <button class="tql-button tql-button-blue mx-2" *ngIf="tabType[currentTap].back && selectedRule.RuleType !== 'Retention'"
+               (click)="onBackTap()">Back</button>
+          <button class="tql-button tql-button-blue mx-2" *ngIf="tabType[currentTap].next && selectedRule.RuleType !== 'Retention'"
+               [disabled]="ruleEditForm.form.invalid || !canNext()" (click)="onNextTap()">Next</button>
+          <button class="tql-button tql-button-blue mx-2" *ngIf="!tabType[currentTap].next || selectedRule.RuleType === 'Retention'"
+               [disabled]="ruleEditForm.form.invalid" (click)="onSave()">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

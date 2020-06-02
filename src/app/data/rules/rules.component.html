@@ -1,0 +1,66 @@
+<section class="rules-container">
+  <div class="default-container-header rule-search clearfix d-flex align-items-center">
+    <div class="bulk-action d-flex align-items-center">
+      <div class="tql-form-group">
+        <select class="bulk-action__list" name="bulkAction" [disabled]="!isAnyItemChecked"
+                [(ngModel)]="bulkAction" ngModel (change)="onSelectAction()">
+          <option value="" selected>Actions</option>
+          <option value="delete">Delete</option>
+        </select>
+      </div>
+    </div>
+    <form name="rule-search-form" class="flex-grow-1 d-flex justify-content-end">
+      <div class="mr-4">
+        <div class="rule-reload float-left" (click)="getAllRule()">
+          <i class="far fa-sync-alt"></i>
+        </div>
+        <div class="rule-create float-left">
+          <a class="tql-button tql-button-blue shadow-sm" [routerLink]="['/rules/create']">New Rule</a>
+        </div>
+      </div>
+      <div class="tql-form-group rule-search__text">
+        <input type="text" class="form-control rule-search__text-input"
+               name="rule-search-text" id="rule-search-text" placeholder="Search"
+               [(ngModel)]="searchText">
+      </div>
+    </form>
+  </div>
+
+  <div class="rules-wrapper default-container-content" id="rules-id">
+    <div class="rules table-responsive">
+      <table class="tql-table" id="rules-id" *ngIf="rules.length">
+        <thead class="rules__header">
+        <tr>
+          <th>
+            <label class="tql-checkbox">
+              <input type="checkbox" name="checkAll" (change)="onCheckAllModel($event)" [(ngModel)]="checkAll"/>
+              <span class="tickmark"></span>
+            </label>
+          </th>
+          <th class="rules__header-item">Name</th>
+          <th class="rules__header-item">Type</th>
+          <th class="rules__header-item">Created</th>
+        </tr>
+        </thead>
+        <tbody class="rules__body">
+        <tr *ngFor="let item of rules|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+            class="rules__item" [ngClass]="{'odd': i%2 === 0, 'even': i%2 !== 0}">
+          <td>
+            <label class="tql-checkbox">
+              <input type="checkbox" value="{{item.Rule.RuleId}}" [(ngModel)]="itemsCheck[i].value"
+                     (change)="onCheckModel($event)"/>
+              <span class="tickmark"></span>
+            </label>
+
+          </td>
+          <td><a [routerLink]="['/rules', item.Rule.RuleId]">{{item.Rule.RuleName}}</a></td>
+          <td>{{item.Rule.RuleType}}</td>
+          <td>{{item.Rule.CreationTime | timeAgo}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="!rules.length">There is no any rule</div>
+    </div>
+  </div>
+
+</section>

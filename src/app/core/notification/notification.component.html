@@ -1,0 +1,6 @@
+
+<ngb-alert *ngIf="successMessage"
+           [type]="notiType"
+           (close)="successMessage = null">
+  <div [innerHTML]="successMessage"> </div>          
+</ngb-alert>

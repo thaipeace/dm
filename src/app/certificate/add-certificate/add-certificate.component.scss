@@ -1,0 +1,12 @@
+.certificate-edit {
+    &__actions {
+        &--disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .btn + .btn {
+            margin-left: 15px; 
+        }
+    }
+}

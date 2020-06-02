@@ -1,0 +1,16 @@
+.login-wrapper {
+  width: 100%;
+  height: calc(100vh - 100px);
+  position: fixed;
+  top: 60px;
+  left: 0;
+  .tql-panel{
+    padding: 25px 15px;
+    max-width: 300px;
+    width: 100%;
+  }
+}
+
+.tql-form-group{
+  margin-bottom: 15px;
+}

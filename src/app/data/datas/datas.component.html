@@ -1,0 +1,99 @@
+<section class="datas-container">
+  <div class="default-container-header data-search clearfix d-flex align-items-center">
+    <div class="bulk-action d-flex align-items-center">
+      <div class="tql-form-group">
+          <select class="bulk-action__list" name="bulkAction" [disabled]="!isAnyItemChecked"
+                  [(ngModel)]="bulkAction" ngModel (change)="onSelectAction()">
+            <option value="" selected>Actions</option>
+            <option value="Pause">Pause</option>
+            <option value="Resume">Resume</option>
+          </select>
+      </div>
+      <div class="data-reload float-left" (click)="getAllData()">
+        <i class="far fa-sync-alt"></i>
+      </div>
+    </div>
+    <form name="application-search-form" class="flex-grow-1 d-flex justify-content-end">
+      <div class="data-create float-left mr-4">
+        <a class="tql-button tql-button-blue shadow-sm" [routerLink]="['/rules']">Rules Management</a>
+      </div>
+      <div class="tql-form-group data-search__text">
+        <app-input-search [searchText]="searchText" (onSearchChange)="searchText = $event"></app-input-search>
+      </div>
+    </form>
+  </div>
+
+  <div class="datas-wrapper default-container-content" id="datas-id">
+    <div class="datas table-responsive">
+      <table class="tql-table" id="datas-id">
+        <thead class="datas__header">
+          <tr>
+            <th>
+              <label class="tql-checkbox">
+                <input type="checkbox" name="checkAll" (change)="onCheckAllModel($event)" [(ngModel)]="checkAll">
+                <span class="tickmark"></span>
+              </label>
+            </th>
+            <th class="datas__header-item">Model</th>
+            <th class="datas__header-item">Source Location</th>
+            <th class="datas__header-item">Status</th>
+            <th class="datas__header-item">Last Updated</th>
+            <th class="datas__header-item">Bytes</th>
+            <th class="datas__header-item">Rules</th>
+          </tr>
+        </thead>
+        <tbody class="datas__body">
+          <tr *ngFor="let item of datas|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+              class="datas__item" [ngClass]="{'odd': i%2 === 0, 'even': i%2 !== 0}">
+            <td>
+              <label class="tql-checkbox">
+                <input type="checkbox" value="{{item.SyncInfo.SyncInfoId}}" [(ngModel)]="itemsCheck[i].value"
+                (change)="onCheckModel($event)">
+                <span class="tickmark"></span>
+              </label>
+            </td>
+            <td>{{item.SyncInfo.ModelName}}</td>
+            <td>{{item.SyncInfo.SourceName}}</td>
+            <td>{{item.SyncInfo.Status}}</td>
+            <td>{{item.SyncInfo.LastUpdated | timeAgo}}</td>
+            <td>{{item.SyncInfo.TotalBytes}}</td>
+            <td>
+              <div class="row m-0 justify-content-center align-items-center">
+                <div class="col pl-0">
+                  <div *ngIf="item.SyncInfo.SyncRule && item.SyncInfo.SyncRule.length">
+                    <span *ngFor="let rule of item.SyncInfo.SyncRule; let i=index">
+                      {{i === 0 ? '' : ', '}}{{rule.RuleName}}
+                    </span>
+                  </div>
+                  <div *ngIf="item.SyncInfo.SyncRule && !item.SyncInfo.SyncRule.length">
+                    <span>{{item.SyncInfo.SyncRule.RuleName}}</span>
+                  </div>
+                </div>
+                <div class="p-0 btn btn-danger text-center attach-rule-btn" title="Attach rule" 
+                  (click)="showAttachRules(item)">+/-</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12 datas__paging-wrapper">
+      <small class="datas__paging" *ngIf="originalDataList.length !== 0">
+        <span>
+          <strong>{{(originalDataList|listBySpecificFields:fieldsValuePairs:searchText).length}}</strong> model(s) found. Displaying 
+          <strong>
+            {{(datas|listBySpecificFields:fieldsValuePairs:searchText).length}}
+            /
+            {{(originalDataList|listBySpecificFields:fieldsValuePairs:searchText).length}}
+          </strong> model(s).
+        </span>
+        <span class="text-primary datas__paging-more" (click)="loadLessMore()"
+              *ngIf="(originalDataList|listBySpecificFields:fieldsValuePairs:searchText).length > listLimitCountDefault">
+        <span *ngIf="(datas|listBySpecificFields:fieldsValuePairs:searchText).length < (originalDataList|listBySpecificFields:fieldsValuePairs:searchText).length">Load More</span>
+        <span *ngIf="(datas|listBySpecificFields:fieldsValuePairs:searchText).length >= (originalDataList|listBySpecificFields:fieldsValuePairs:searchText).length">Less</span>
+        </span>
+      </small>
+    </div>
+  </div>
+
+</section>

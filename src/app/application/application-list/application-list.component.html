@@ -1,0 +1,64 @@
+<section class="application-list-container">
+  <div class="default-container-header application-search clearfix d-flex align-items-center">
+    <div class="bulk-action d-flex align-items-center">
+      <div class="tql-form-group">
+        <select class="bulk-action__list" name="bulkAction" [disabled]="!isAnyItemChecked"
+                [(ngModel)]="bulkAction" ngModel (change)="onSelectAction()" *ngIf="applications.length">
+          <option value="" selected>Actions</option>
+          <option value="delete">Delete</option>
+          <option value="undeploy">Undeploy</option>
+        </select>
+      </div>
+      <div class="application-reload float-left" (click)="getAllApplication()">
+        <i class="far fa-sync-alt"></i>
+      </div>
+    </div>
+    <form name="application-search-form" class="flex-grow-1 d-flex justify-content-end">
+      <div class="application-create mr-4">
+        <button class="tql-button tql-button-blue shadow-sm" (click)="showUpsertApplicationForm(null)">Add new application</button>
+      </div>
+      <div class="tql-form-group application-search__text">
+        <app-input-search [searchText]="searchText" (onSearchChange)="searchText = $event"></app-input-search>
+      </div>
+    </form>
+  </div>
+
+  <div class="application-list-wrapper default-container-content" id="application-list-id">
+    <div class="application-list table-responsive" *ngIf="applications.length">
+      <table class="tql-table" id="application-list-id">
+        <thead class="application-list__header">
+          <tr>
+            <th>
+              <label class="tql-checkbox">
+                <input type="checkbox" name="checkAll" (change)="onCheckAllModel($event)" [(ngModel)]="checkAll">
+                <span class="tickmark"></span>
+              </label>
+            </th>
+            <th class="application-list__header-item">Application Name</th>
+            <th class="application-list__header-item">Package</th>
+            <th class="application-list__header-item">Latest Version</th>
+            <th class="application-list__header-item">Deployment</th>
+          </tr>
+        </thead>
+        <tbody class="application-list__body">
+          <tr *ngFor="let item of applications|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+              class="application-list__item" [ngClass]="{'odd': i%2 === 0, 'even': i%2 !== 0}">
+            <td>
+              <label class="tql-checkbox">
+                <input type="checkbox" value="{{item.AppId}}" [(ngModel)]="itemsCheck[i].value"
+                (change)="onCheckModel($event)">
+                <span class="tickmark"></span>
+              </label>
+            </td>
+            <td><a [routerLink]="['/applications/application', item.AppId]">{{item.Name.$.Value}}</a></td>
+            <td>{{item.AppDownloadURL.$.Value}}</td>
+            <td>{{item.Version.$.Value}}</td>
+            <td>{{item.Deployment}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!applications.length">There is no any application</div>
+  </div>
+
+</section>

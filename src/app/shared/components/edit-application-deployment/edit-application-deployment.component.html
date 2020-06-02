@@ -1,0 +1,38 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form #applicationDeploymentEditForm="ngForm" name="application-deployment-edit-form"
+            id="application-deployment-edit-form-id" class="application-deployment-edit">
+        <div class="modal-header">
+          <h4 class="modal-title">{{title}}</h4>
+          <button type="button" class="close" (click)="close()" >&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row align-items-end">
+            <div class="col-6 form-group float-left application-deployment-edit__application required" *ngIf="applications.length">
+              <label for="applicationDeploymentApplication">Application</label>
+              <select name="applicationDeploymentApplication" [(ngModel)]="applicationDeployment.application" ngModel 
+                      class="col-12 form-control application-deployment-edit__application-input" required>
+                <option value="" selected>Select an application</option>
+                <option *ngFor="let application of applications" [ngValue]="application">
+                  {{application.Name.$.Value}}
+                </option>
+              </select>
+            </div>
+            <div class="col-6 form-group float-left" *ngIf="!applications.length">No applications available for deployment</div>
+            <div class="col-6 form-group float-left application-deployment-edit__apply-default-configuration">
+              <input type="checkbox" id="application-deployment-apply-default-configuration" name="applyDefaultConfigurationApplicationDeployment"
+                     class="col-1 application-deployment-edit__apply-default-configuration-input"
+                     [(ngModel)]="applicationDeployment.applyDefaultConfiguration" #applyDefaultConfigurationApplicationDeployment="ngModel">
+              <label class="form-check-label" for="applyDefaultConfigurationApplicationDeployment">Apply Default Configuration</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-inline application-deployment-edit__actions float-right">
+              <button class="btn btn-secondary" (click)="onSaveApplicationDeployment()"
+                [disabled]="applicationDeploymentEditForm.form.invalid || !applications.length">Deploy</button>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>

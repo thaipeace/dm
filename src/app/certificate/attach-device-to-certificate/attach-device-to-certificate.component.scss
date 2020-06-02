@@ -1,0 +1,57 @@
+@import '~src/sass/custom_variables';
+
+.certificate-device {
+  &__certificate {
+    padding: 10px 0 20px 0;
+
+    &--name {
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 10px 0;
+    }
+  }
+
+  &__search {
+    padding: 10px;
+    background-color: $cl_container_bg;
+    border-radius: 5px 5px 0 0;
+  }
+
+  &__search-text {
+    margin: 0;
+  }
+
+  &__devices {
+    border: 1px solid $cl_container_border;
+    border-radius: 5px;
+  }
+
+  &__item {
+    padding: 11px 25px;
+    border-top: none;
+    & + .certificate-device__item {
+      border-top: 1px solid $cl_container_border;
+    }
+  }
+
+  &__item-check {
+    &--certi {
+      font-size: 80%;
+    }
+  }
+
+  &__actions {
+    button {
+      margin-right: 15px;
+      & + button {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__list {
+    max-height: 30vh;
+    min-height: 15vh;
+    overflow-y: auto;
+  }
+}

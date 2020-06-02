@@ -1,0 +1,10 @@
+<div class="tql-form-group search d-flex align-items-center">
+  <input type="text" class="form-control flex-grow-1" name="events-search-text"
+         placeholder="Search" (ngModelChange)="onSearchChange?.emit($event)"
+         [(ngModel)]="searchText">
+  <div class="vl"></div>
+  <div class="search-icon">
+    <i class="fal fa-times cursor-pointer" (click)="searchText = null; onSearchChange?.emit(searchText)" *ngIf="searchText?.length > 0"></i>
+    <i class="far fa-search" *ngIf="!searchText"></i>
+  </div>
+</div>

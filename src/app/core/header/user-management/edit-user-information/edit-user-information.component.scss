@@ -1,0 +1,8 @@
+.user-edit {
+    &__actions {
+        &--disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    }
+}

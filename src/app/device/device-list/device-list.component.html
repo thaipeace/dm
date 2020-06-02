@@ -1,0 +1,83 @@
+<section class="device-list-container">
+  <div class="default-container-header device-search clearfix d-flex align-items-center">
+    <div class="bulk-action d-flex align-items-center">
+      <div class="tql-form-group">
+        <select class="bulk-action__list" name="bulkAction" [disabled]="!isAnyItemChecked"
+                [(ngModel)]="bulkAction" ngModel (change)="onSelectAction()">
+          <option value="" selected>Actions</option>
+          <option value="remove">Remove</option>
+          <option value="deactive">Deactivate</option>
+          <option value="soft-reset">Soft Reset</option>
+          <option value="hard-reset">Hard Reset</option>
+        </select>
+      </div>
+      <div class="device-reload float-left" (click)="getAllDevice()">
+        <i class="far fa-sync-alt"></i>
+      </div>
+    </div>
+    <form name="device-search-form" class="flex-grow-1 d-flex justify-content-end">
+      <div class="application-create mr-4">
+        <button class="tql-button tql-button-blue shadow-sm" (click)="showUpsertDeviceForm(null)">Add new device</button>
+      </div>
+      <div class="tql-form-group application-search__text">
+        <app-input-search [searchText]="searchText" (onSearchChange)="searchText = $event"></app-input-search>
+      </div>
+    </form>
+  </div>
+
+  <div class="device-list-wrapper default-container-content" id="device-list-id">
+    <div class="device-list table-responsive">
+      <table class="tql-table" id="device-list-id">
+        <thead class="device-list__header">
+          <tr>
+            <th>
+              <input type="checkbox" name="checkAll" (change)="onCheckAllModel($event)" [(ngModel)]="checkAll" />
+            </th>
+            <th class="device-list__header-item">Device Name</th>
+            <th class="device-list__header-item">Type</th>
+            <th class="device-list__header-item">State</th>
+            <th class="device-list__header-item">Last Seen</th>
+            <th class="device-list__header-item">Alerts</th>
+          </tr>
+        </thead>
+        <tbody class="device-list__body">
+          <tr *ngFor="let item of devices|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+              class="device-list__item" [ngClass]="{'odd': i%2 === 0, 'even': i%2 !== 0}">
+            <td>
+              <input type="checkbox" value="{{item.Device.DeviceId}}" 
+                     [(ngModel)]="itemsCheck[i].value"
+                     (change)="onCheckModel($event)" />
+            </td>
+            <td class="device-list__item-name">
+              <a [routerLink]="['/devices/device', item.Device.DeviceId]">{{item.Device.DeviceName}}</a>
+            </td>
+            <td class="device-list__item-type">{{item.Device.Type}}</td>
+            <td class="device-list__item-state">{{item.Device.CurrentState}}</td>
+            <td class="device-list__item-last-seen">{{item.Device.LastSeen | timeAgo}}</td>
+            <td class="device-list__item-alert"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12 device-list__paging-wrapper">
+      <small class="device-list__paging" *ngIf="originalDeviceList.length !== 0">
+        <span>
+          <strong>{{(originalDeviceList|listBySpecificFields:fieldsValuePairs:searchText).length}}</strong> device(s) found. Displaying 
+          <strong>
+            {{(devices|listBySpecificFields:fieldsValuePairs:searchText).length}}
+            /
+            {{(originalDeviceList|listBySpecificFields:fieldsValuePairs:searchText).length}}
+          </strong> device(s).
+        </span>
+        <span class="text-primary device-list__paging-more" (click)="loadLessMore()"
+              *ngIf="(originalDeviceList|listBySpecificFields:fieldsValuePairs:searchText).length > listLimitCountDefault">
+            <span
+              *ngIf="(devices|listBySpecificFields:fieldsValuePairs:searchText).length < (originalDeviceList|listBySpecificFields:fieldsValuePairs:searchText).length">Load More</span>
+            <span
+              *ngIf="(devices|listBySpecificFields:fieldsValuePairs:searchText).length >= (originalDeviceList|listBySpecificFields:fieldsValuePairs:searchText).length">Less</span>
+        </span>
+      </small>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,57 @@
+<div class="app-deploy-header clearfix row mb-4 justify-content-between align-items-center">
+  <div class="bulk-action col-6">
+    <select class="bulk-action__list" name="bulkAction" [disabled]="!isAnyItemChecked"
+            [(ngModel)]="bulkAction" ngModel (change)="onSelectAction()">
+      <option value="" selected>Actions</option>
+      <!-- <option value="stop">Stop</option>
+      <option value="start">Start</option>
+      <option value="restart">Restart</option> -->
+      <option value="undeploy">Undeploy</option>
+      <!-- <option value="redeploy">Redeploy</option> -->
+    </select>
+  </div>
+  <div class="d-flex justify-content-end align-items-center col-6">
+    <div id="spinner-deploy-application"></div>
+    <button class="btn btn-primary position-relative" (click)="showDeployApplicationFrom()" 
+      [disabled]="thing.Status === 'Inactive'"
+      [title]="thing.Status === 'Inactive' ? 'Activate Edge for deploy applications' : ''">
+      Deploy more applications
+    </button>
+  </div>
+</div>
+<div class="app-deploy-body">
+  <div *ngIf="!deployedApplications.length">No applications deployed</div>
+  <table class="tql-table" id="app-deploy-list-id" *ngIf="deployedApplications.length">
+    <thead class="app-deploy-list__header">
+    <tr>
+      <th>
+        <input type="checkbox" name="checkAll" (change)="onCheckAllModel($event)" [(ngModel)]="checkAll" />
+      </th>
+      <th class="app-deploy-list__header-item">Application</th>
+      <th class="app-deploy-list__header-item">State</th>
+      <th class="app-deploy-list__header-item">Version</th>
+      <!-- <th class="app-deploy-list__header-item">Configuration</th> -->
+      <th class="app-deploy-list__header-item">Install date</th>
+      <th class="app-deploy-list__header-item">Last activated</th>
+      <th class="app-deploy-list__header-item">Last stopped</th>
+    </tr>
+    </thead>
+    <tbody class="app-deploy-body__body">
+      <tr *ngFor="let item of deployedApplications; let i = index" class="app-deploy-list__item">
+        <td>
+          <input type="checkbox" value="{{item.AppId}}" [(ngModel)]="itemsCheck[i].value"
+            (change)="onCheckModel($event)" />
+        </td>
+        <td class="app-deploy-list__item-application">
+          <a [routerLink]="['/applications/application', item.AppId]">{{item.Name}}</a>
+        </td>
+        <td class="app-deploy-list__item-state">{{item.State}}</td>
+        <td class="app-deploy-list__item-version">{{item.Version}}</td>
+        <!-- <td class="app-deploy-list__item-configuration"></td> -->
+        <td class="app-deploy-list__item-install">{{item.InstalledDate | date : 'yyyy-MM-dd (HH:mm:ss)' }}</td>
+        <td class="app-deploy-list__item-activated">{{item.LastActivated | timeAgo}}</td>
+        <td class="app-deploy-list__item-stopped">{{item.LastStopped ? (item.LastStopped | timeAgo) : 'never'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,51 @@
+<div class="tql-dialog modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <form #applicationEditForm="ngForm" name="application-edit-form" class="application-edit tql-form">
+      <div class="modal-header">
+        <span class="modal-title">{{title}}</span>
+        <button type="button" class="close" (click)="close()"><i class="far fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-6 tql-form-group float-left application-edit__name required">
+            <label for="applicationName">Name</label>
+            <input type="text" class="form-control application-edit__name-input" required
+                   name="applicationName" id="application-edit-name" placeholder="Name"
+                   [(ngModel)]="selectedApplication.name" #applicationName="ngModel">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6 tql-form-group float-left application-edit__package required">
+            <label for="applicationPackage" class="col-12 col-form-label no-horizon-padding">Package</label>
+            <input type="text" class="form-control application-edit__package-input" required
+                   name="applicationPackage" id="application-edit-package" placeholder="Package"
+                   [(ngModel)]="selectedApplication.package" #applicationPackage="ngModel">
+          </div>
+          <div class="col-6 tql-form-group float-left application-edit__version required">
+            <label for="version" class="col-12 col-form-label no-horizon-padding">Version Number</label>
+            <input type="text" class="form-control application-edit__version-input" required
+                   name="version" id="application-edit-version" placeholder="Version"
+                   [(ngModel)]="selectedApplication.version" #version="ngModel">
+          </div>
+        </div>
+        <!-- <hr/> -->
+        <!-- <div class="row">
+          <div class="col-6 tql-form-group float-left application-edit__dependencies">
+            <label for="dependenciesApp" class="col-12 col-form-label no-horizon-padding">Dependencies</label>
+            <input type="text" class="col-12 form-control application-edit__dependencies-input"
+                   name="dependenciesApp" id="application-edit-dependencies" placeholder="Dependencies"
+                   [(ngModel)]="dependencies" #dependenciesApp="ngModel">
+          </div>
+        </div> -->
+
+      </div>
+      <div class="modal-footer">
+        <div class="form-inline application-edit__actions float-right"
+             [ngClass]="{'application-edit__actions--disabled': applicationEditForm.form.invalid || applicationEditForm.form.pristine}">
+          <button class="tql-button tql-button-red shadow-sm" (click)="onSaveApplication()">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

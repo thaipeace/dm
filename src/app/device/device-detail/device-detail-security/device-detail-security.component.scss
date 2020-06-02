@@ -1,0 +1,9 @@
+.device-detail-security{
+    &__certificate-button {
+        margin-left: 15px;
+    }
+
+    &__action-wrapper {
+        border-bottom: 1px solid var(--gray);
+    }
+}

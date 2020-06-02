@@ -1,0 +1,27 @@
+<section class="certificate-detail-things">
+  <h3 class="certificate-detail-things__header">Devices</h3>
+  <div class="certificate-detail-things__certi-wrapper" id="certificate-detail-things-certi-wrapper-id">
+    <div class="card-deck">
+      <div *ngFor="let device of devices" class="col-3 card">
+        <div class="card-header">
+          <div class="card-action">
+            <div ngbDropdown class="d-inline-block">
+              <div class="ngbDropdown__item-action-button" id="dropdownBasic1" ngbDropdownToggle>...</div>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <span class="ngbDropdown__item-action ngbDropdown__item-action--unattach dropdown-item" 
+                      (click)="unattachCertificate(device.Device.DeviceId)">Unattach</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-name">{{device.Device.DeviceName}}</div>
+        </div>
+        <div class="card-body" [routerLink]="['/devices/device', device.Device.DeviceId]">
+          <ul class="card-ul">
+            <li>Device Id: {{device.Device.DeviceId}}</li>
+            <li>Created: {{device.Device.CreatedAt | date: 'yyyy-MM-dd (HH:mm)'}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

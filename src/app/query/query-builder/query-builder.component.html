@@ -1,0 +1,67 @@
+<div class="tql-dialog modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <form #queryEditForm="ngForm" name="query-edit-form" class="query-edit tql-form">
+      <div class="modal-header">
+        <span class="modal-title">{{title}}</span>
+        <button type="button" class="close" (click)="close()"><i class="far fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-6 tql-form-group float-left query-edit__name required">
+            <label for="queryName" class="col-12 col-form-label no-horizon-padding">Name</label>
+            <input type="text" class="form-control query-edit__name-input" required
+                    name="queryName" id="query-edit-name" placeholder="Name"
+                    [(ngModel)]="query.name" #queryName="ngModel">
+          </div>
+          <div class="col-6 tql-form-group float-left query-edit__location required">
+              <label for="location" class="col-12 col-form-label no-horizon-padding">Location</label>
+              <select name="location" [(ngModel)]="query.edge" ngModel
+                class="col-12 form-control query-edit__location-input" required
+                (change)="onSelectEdge()">
+                <option [ngValue]="null" selected>Select an edge location</option>
+                <option *ngFor="let edge of edges" [ngValue]="edge.Edge">
+                  {{edge.Edge.EdgeName}}
+                </option>
+              </select>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6 tql-form-group float-left query-edit__label required">
+            <label for="label" class="col-12 col-form-label no-horizon-padding">Application Label</label>
+            <select name="label" [(ngModel)]="query.app" ngModel [disabled]="!query.edge"
+              class="col-12 form-control query-edit__label-input" required>
+              <option [ngValue]="null" selected>{{apps.length ? 'Applications are listed here' : 'No application deployed'}}</option>
+              <option *ngFor="let app of apps" [ngValue]="app">{{app.Name}}</option>
+            </select>
+          </div>
+          <div class="col-6 form-group float-left query-edit__time">
+              <label for="time" class="col-12 col-form-label no-horizon-padding">Time</label>
+              <input type="text" class="col-12 form-control query-edit__time-input"
+                name="time" id="query-edit-time" placeholder="Now"
+                [(ngModel)]="query.time" #time="ngModel" disabled>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6 form-group float-left query-edit__operation">
+            <label for="operation" class="col-12 col-form-label no-horizon-padding">Operation</label>
+            <select name="operation" [(ngModel)]="query.operation" ngModel 
+                    class="col-12 form-control query-edit__operation-input">
+              <option value="Read">Read</option>
+              <option value="Write">Write</option>
+              <option value="Subscribe">Subscribe</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-inline query-edit__actions float-right"
+              [ngClass]="{'query-edit__actions--disabled': queryEditForm.form.invalid || queryEditForm.form.pristine}">
+          <button class="tql-button tql-button-red shadow-sm" (click)="onSaveQuery()">Generate Query</button>
+          <button class="tql-button tql-button-red shadow-sm" (click)="onSaveQuery()">Run</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<agm-map #AgmMap [latitude]="38.8752665" [longitude]="-105.0425666" [zoom]="4">
+  <agm-marker *ngFor="let item of edges|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+    [latitude]="markers[item.Edge.EdgeId].lat"
+    [longitude]="markers[item.Edge.EdgeId].long"
+    [iconUrl]="edgeColors[edgeRealStatus[item.Edge.EdgeId]]">
+    <agm-snazzy-info-window [maxWidth]="200" [closeWhenOthersOpen]="true">
+      <ng-template>
+        <div class="edge-map-box">
+          Name: <a [routerLink]="['/edges/edge', item.Edge.EdgeId]">{{item.Edge.DisplayName}}</a> <br/>
+          Status: {{item.Edge.Status}}<br/>
+          Alert: 0
+        </div>
+      </ng-template>
+    </agm-snazzy-info-window>          
+  </agm-marker>
+</agm-map>

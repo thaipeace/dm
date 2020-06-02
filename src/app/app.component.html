@@ -1,0 +1,25 @@
+<section class="site-wrapper">
+  <header>
+    <app-header></app-header>
+  </header>
+  <main>
+    <aside>
+      <app-aside *ngIf="!isRoute('/login')"></app-aside>
+    </aside>
+    <section class="content-wrapper main-wrapper">
+      <div class="clearfix" *ngIf="!isRoute('/login')" id="hero">
+        <app-notification class="col-12 col-md-3 notification"></app-notification>
+      </div>
+      <div class="tql-padding-20">
+        <div class="tql-panel shadow-sm default-container">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <app-footer></app-footer>
+  </footer>
+</section>
+<div id="modal-container" class="hidden"></div>
+<div id="overlay" class="hidden"></div>

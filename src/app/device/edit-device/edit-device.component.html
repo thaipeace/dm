@@ -1,0 +1,64 @@
+<div class="tql-dialog modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+    <form #deviceEditForm="ngForm" name="device-edit-form" class="device-edit tql-form">
+      <div class="modal-header">
+        <span class="modal-title">{{title}}</span>
+        <button type="button" class="close" (click)="close()" ><i class="far fa-times"></i></button>
+      </div>
+      <div class="modal-body row m-0">
+        <div class="col-6 tql-form-group float-left device-edit__name no-padding-left required">
+          <label for="deviceName">Name</label>
+          <input type="text" class="form-control device-edit__name-input" required
+                  name="deviceName" id="device-edit-name" placeholder="Device Name"
+                  [(ngModel)]="selectedDevice.name" #deviceName="ngModel">
+        </div>
+        <div class="col-6 tql-form-group float-left device-edit__mac no-padding-right required">
+          <label for="deviceMac">MAC Address</label>
+          <input type="text" class="form-control device-edit__mac-input" required
+                  name="deviceMac" id="device-edit-mac" placeholder="MAC Address"
+                  [(ngModel)]="selectedDevice.mac" #deviceMac="ngModel">
+        </div>
+        <div class="col-6 tql-form-group float-left device-edit__default-home-url no-padding-left required">
+          <label for="defaultHomeURL" class="col-12 col-form-label no-horizon-padding">Default Home URL</label>
+          <input type="text" class="col-12 form-control device-edit__default-home-url-input"
+                name="defaultHomeURL" id="device-edit-default-home-url" placeholder="Default Home URL"
+                [(ngModel)]="selectedDevice.DefaultHomeURL" #defaultHomeURL="ngModel" required appUrlValidator>
+        </div>
+        <div class="col-6 tql-form-group float-left device-edit__home-url no-padding-right required">
+          <label for="homeURL" class="col-12 col-form-label no-horizon-padding">Home URL</label>
+          <input type="text" class="col-12 form-control device-edit__home-url-input"
+                name="homeAddress" id="device-edit-home-url" placeholder="Home URL"
+                [(ngModel)]="selectedDevice.HomeURL" #homeURL="ngModel" required appUrlValidator>
+        </div>
+        <div class="col-6 tql-form-group float-left device-edit__protocol no-padding-left required">
+          <label for="protocol" class="col-12 col-form-label no-horizon-padding">Protocol</label>
+          <select name="protocol" [(ngModel)]="selectedDevice.DeviceProtocol" ngModel 
+                  class="col-12 form-control device-edit__protocol-input" required>
+            <option value="HTTP" selected>HTTP</option>
+            <option value="MQTT">MQTT</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-6 tql-form-group float-left device-edit__type no-padding-right required">
+          <label for="type" class="col-12 col-form-label no-horizon-padding">Type</label>
+          <select name="type" [(ngModel)]="selectedDevice.Type" ngModel required
+                  class="col-12 form-control device-edit__type-input">
+            <option value="Neuron" selected>Neuron</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-6 tql-form-group float-left device-edit__location no-padding-left required">
+          <label for="location" class="col-12 col-form-label no-horizon-padding">Location</label>
+          <input type="text" class="col-12 form-control device-edit__location" required
+                 name="location" id="device-edit-location" placeholder="Location"
+                 [(ngModel)]="selectedDevice.Location" #location="ngModel">
+        </div>
+      </div>
+      <div class="modal-footer">
+          <div class="form-inline device-edit__actions float-right button-group"
+              [ngClass]="{'device-edit__actions--disabled': deviceEditForm.form.invalid || deviceEditForm.form.pristine}">
+            <button class="tql-button tql-button-red shadow-sm" (click)="onSaveDevice()" *ngIf="!selectedDevice.id">Provision</button>
+            <button class="tql-button tql-button-red shadow-sm" (click)="onSaveDevice()" *ngIf="selectedDevice.id">Edit</button>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>

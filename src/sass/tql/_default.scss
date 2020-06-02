@@ -1,0 +1,335 @@
+@import './variables';
+@import './mixin';
+/*=== TEXT ALIGN ===*/
+.text {
+  &-left {
+    text-align: left;
+  }
+  &-right {
+    text-align: right;
+  }
+  &-center {
+    text-align: center;
+  }
+  &-justify {
+    text-align: justify;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .text {
+    &-left,
+    &-center,
+    &-right,
+    &-justify {
+      &-not-lg {
+        text-align: inherit;
+      }
+    }
+    &-left-lg {
+      text-align: left;
+    }
+    &-center-lg {
+      text-align: center;
+    }
+    &-right-lg {
+      text-align: right;
+    }
+    &-justify-lg {
+      text-align: justify;
+    }
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .text {
+    &-left,
+    &-center,
+    &-right,
+    &-justify {
+      &-not-md {
+        text-align: inherit;
+      }
+    }
+    &-left-md {
+      text-align: left;
+    }
+    &-center-md {
+      text-align: center;
+    }
+    &-right-md {
+      text-align: right;
+    }
+    &-justify-md {
+      text-align: justify;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .text {
+    &-left,
+    &-center,
+    &-right,
+    &-justify {
+      &-not-sm {
+        text-align: inherit;
+      }
+    }
+    &-left-sm {
+      text-align: left;
+    }
+    &-center-sm {
+      text-align: center;
+    }
+    &-right-sm {
+      text-align: right;
+    }
+    &-justify-sm {
+      text-align: justify;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .text {
+    &-left,
+    &-center,
+    &-right,
+    &-justify {
+      &-not-xs {
+        text-align: inherit;
+      }
+    }
+    &-left-xs {
+      text-align: left;
+    }
+    &-center-xs {
+      text-align: center;
+    }
+    &-right-xs {
+      text-align: right;
+    }
+    &-justify-xs {
+      text-align: justify;
+    }
+  }
+}
+
+/*=== TEXT COLOR ===*/
+.text- {
+  &blue {
+    color: $cl_alert_blue !important;
+  }
+  &red {
+    color: $cl_red !important;
+  }
+  &grey {
+    color: $cl_black_grey !important;
+    &-middle {
+      color: $cl_dark_grey !important;
+    }
+    &-light {
+      color: $cl_grey !important;
+    }
+  }
+  &orange {
+    color: $cl_orange !important;
+  }
+  &white {
+    color: $cl_white !important;
+  }
+  &error {
+    color: $cl_input_text_error !important;
+  }
+}
+
+/*==== BUTTON ====*/
+.tql-button {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 13px;
+  font-family: 'Roboto';
+  text-transform: uppercase;
+  vertical-align: middle;
+  @include no-select;
+  padding: 0 26px;
+  line-height: 30px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &-red {
+    color: $cl_white;
+    background-color: $cl_red;
+    border-color: $cl_red;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_red_light;
+      border-color: $cl_red_light;
+    }
+  }
+  &-text-red {
+    color: $cl_red;
+    background-color: transparent;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_red_light;
+      border-color: $cl_red_light;
+    }
+  }
+  &-blue {
+    color: $cl_white;
+    background-color: $cl_alert_blue;
+    border-color: $cl_alert_blue;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_blue_light;
+      border-color: $cl_blue_light;
+    }
+  }
+  &-text-blue {
+    color: $cl_blue;
+    background-color: transparent;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_blue_light;
+      border-color: $cl_blue_light;
+    }
+  }
+  &-orange {
+    color: $cl_white;
+    background-color: $cl_orange;
+    border-color: $cl_orange;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_orange_light;
+      border-color: $cl_orange_light;
+    }
+  }
+  &-text-orange {
+    color: $cl_orange;
+    background-color: transparent;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_orange_light;
+      border-color: $cl_orange_light;
+    }
+  }
+  &-grey {
+    color: $cl_white;
+    background-color: $cl_grey;
+    border-color: $cl_grey;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_grey_light;
+      border-color: $cl_grey_light;
+    }
+  }
+  &-text-grey {
+    color: $cl_grey;
+    background-color: transparent;
+    &:hover {
+      color: $cl_white;
+      background-color: $cl_grey_light;
+      border-color: $cl_grey_light;
+    }
+  }
+  &-outline {
+    background-color: transparent;
+    background-image: none;
+    &:hover {
+      color: $cl_white;
+    }
+  }
+  &-outline-red {
+    color: $cl_red;
+    border-color: $cl_red;
+    &:hover {
+      background-color: $cl_red_light;
+      border-color: $cl_red_light;
+    }
+  }
+  &-outline-blue {
+    color: $cl_alert_blue;
+    border-color: $cl_alert_blue;
+    &:hover {
+      background-color: $cl_blue_light;
+      border-color: $cl_blue_light;
+    }
+  }
+  &-outline-orange {
+    color: $cl_orange;
+    border-color: $cl_orange;
+    &:hover {
+      background-color: $cl_orange_light;
+      border-color: $cl_orange_light;
+    }
+  }
+  &-outline-grey {
+    color: $cl_grey;
+    border-color: $cl_grey;
+    &:hover {
+      background-color: $cl_grey_light;
+      border-color: $cl_grey_light;
+    }
+  }
+  &-lg {
+    font-size: 16px;
+    padding: 0 56px;
+    line-height: 44px;
+    &:hover {
+      color: $cl_white;
+    }
+  }
+  &-lg-red {
+    border: 2px solid $cl_red;
+    &:hover {
+      background-color: $cl_red_light;
+      border-color: $cl_red_light;
+    }
+  }
+  &-lg-blue {
+    border: 2px solid $cl_alert_blue;
+    &:hover {
+      background-color: $cl_blue_light;
+      border-color: $cl_blue_light;
+    }
+  }
+  &-lg-orange {
+    border: 2px solid $cl_orange;
+    &:hover {
+      background-color: $cl_orange_light;
+      border-color: $cl_orange_light;
+    }
+  }
+  &-lg-grey {
+    border: 2px solid $cl_grey;
+    &:hover {
+      background-color: $cl_grey_light;
+      border-color: $cl_grey_light;
+    }
+  }
+}
+
+/*=== TEXT TRANSFORM ====*/
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+%display-list {
+  display: inline-block;
+  vertical-align: middle;
+}

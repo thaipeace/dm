@@ -1,0 +1,50 @@
+<section class="query-list">
+  <div class="default-container-header clearfix">
+    <div class="float-left">
+      <button class="tql-button tql-button-blue shadow-sm" name="query"
+              (click)="runQuery()" [disabled]="!query || !selectedQueryBuilder">Run</button>
+    </div>
+    <div class="float-right">
+      <button class="tql-button tql-button-blue shadow-sm"
+              (click)="showQueryBuilder()">Query Builder</button>
+    </div>
+  </div>
+  <div class="default-container-content">
+    <div class="row h-100">
+      <div class="query-list__query-builder col-3">
+        <div class="list-group">
+          <div class="query-list__query-builder-item" *ngFor="let queryBuilder of queryBuilders"
+               [ngClass]="{'query-list__query-builder-item--active': queryBuilder.QueryBuilder.QueryId === selectedQueryBuilder?.QueryBuilder.QueryId}"
+               (click)="onSelectQueryBuilder(queryBuilder.QueryBuilder.QueryId)">
+            <button type="button" class="list-group-item list-group-item-action">{{queryBuilder.QueryBuilder.Name}}</button>
+            <div class="query-list__query-builder-detail container-fluid">
+              <dl class="row mb-0">
+                <dt class="col-4 mb-2">Edge Name</dt>
+                <dd class="col-8 mb-2">{{queryBuilder.QueryBuilder.EdgeName}}</dd>
+                <dt class="col-4 mb-2">Application</dt>
+                <dd class="col-8 mb-2">{{queryBuilder.QueryBuilder.Label}}</dd>
+                <dt class="col-4 mb-2">Operation</dt>
+                <dd class="col-8 mb-2">{{queryBuilder.QueryBuilder.Opeation}}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9 h-100" id="query-list__exe-id">
+        <div class="col-12 no-horizon-padding h-50 query-list__query">
+          <div class="h-100 w-100 p-2 pl-5 query-list__query--container" id="queryListRequestId"
+               contenteditable="true" [(ngModel)]="query"></div>
+          <div class="line-numbers p-2 query-list__query--line-number" id="queryListLineNumberId"
+               [innerHtml]="buildTextAreaLineNumber()"></div>
+        </div>
+        <small><i>Default query: &lt;Find&gt;&lt;VendorInfo&gt;&lt;vendorId ne=""&gt;&lt;/vendorId&gt;&lt;/VendorInfo&gt;&lt;/Find&gt;</i></small>
+        <div class="col-12 no-horizon-padding mt-4 query-list__response">
+          <div class="query-list__response--label">Response</div>
+          <div class="w-100 query-list__response--container p-2" id="queryListResponsetId">
+            <pre><code>{{result | json}}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+.edge-summary {
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+
+    &__item {
+        padding: 0 15px;
+        font-weight: 13px;
+        color: rgb(153, 153, 153);
+        
+        b {
+            color: black;
+        }
+    }
+}

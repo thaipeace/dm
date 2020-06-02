@@ -1,0 +1,16 @@
+<section class="user-wrapper d-inline-block" *ngIf="user">
+  <div class="user">
+    <div class="user__image"></div>
+    <div class="user__info">
+      <div class="user__info__name" (click)="isDropdownOpen=!isDropdownOpen;" [ngClass]="{active: isDropdownOpen}">
+        {{user?.Username}}
+      </div>
+      <ul class="user__info__detail">
+        <li>
+          <a href="#" class="d-flex justify-content-between align-items-center"
+             (click)="logout()"><i class="fal fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

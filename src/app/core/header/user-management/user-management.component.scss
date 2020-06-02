@@ -1,0 +1,18 @@
+.user-wrapper {
+  float: right;
+  overflow: visible;
+  .user {
+    padding: 8px 0;
+    margin-right: 10px !important;
+    .user__info__name {
+      &:after {
+        margin-left: 10px;
+      }
+    }
+    .user__info__detail {
+      a {
+        font-size: 13px;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<ul class="pl-4">
+  <li class="list-style-none py-1">
+    <span class="cursor-poiter p-2" *ngIf="objKeys" (click)="isCollapsed = !isCollapsed">
+      <i class="fas fa-caret-right" [ngClass]="{'expanded': !isCollapsed}"></i>
+    </span>
+    <span class="cursor-poiter" *ngIf="objKeys" (click)="isCollapsed = !isCollapsed">{{parentName || obj.Name || obj.QName}}</span>
+    <ul class="pl-4" *ngIf="objKeys && !isCollapsed">
+      <li class="list-style-none py-1" *ngFor="let prop of objKeys">
+        <span *ngIf="!isObject(obj[prop])">{{prop}}: {{obj[prop] || decode}}</span>
+        <app-tree-view *ngIf="isObject(obj[prop])" [obj]="obj[prop]" [parentName]="objKeys"></app-tree-view>
+      </li>
+    </ul>
+    <span *ngIf="!objKeys">{{obj}}</span>
+  </li>
+</ul>

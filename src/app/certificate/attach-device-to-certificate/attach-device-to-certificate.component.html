@@ -1,0 +1,57 @@
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+        <button type="button" class="close" (click)="onCancel()" >&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="certificate-device__certificate">
+          <div class="certificate-device__certificate--lable">Device will be attached to the following certificate:</div>
+          <div class="certificate-device__certificate--name">
+            <div>{{certificateName}}</div>
+            <small>{{certificateId}}</small>
+          </div>
+        </div>
+        <div class="certificate-device__devices">
+          <div class="certificate-device__search">
+            <form name="certificate-device__search-form" class="col-12 no-horizon-padding">
+              <div class="form-group certificate-device__search-text">
+                <input type="text" class="form-control certificate-device__text-input"
+                        name="certificate-device-search-text" id="certificate-device-search-text" placeholder="Search"
+                        [(ngModel)]="searchText">
+              </div>
+            </form>
+          </div>
+          <div class="certificate-device__list">
+            <form #certificateDeviceForm="ngForm" name="certificate-device-form" class="certificate-device">
+              <div *ngFor="let item of devices|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+                   class="certificate-device__item clearfix" [ngClass]="{'odd': i%2 === 0, 'even': i%2 !== 0}">
+                <div class="form-check certificate-device__item-check">
+                  <span class="col-6 float-left no-horizon-padding">
+                      <input type="radio" class="form-check-input" id="{{item.Device.DeviceId}}" 
+                             name="deviceList" value="{{item.Device.MACAddress}}" [(ngModel)]="selectedDeviceMACAddress">
+                      <label class="form-check-label" for="{{item.Device.DeviceId}}">{{item.Device.DeviceName}}</label>
+                  </span>
+                  <span class="certificate-device__item-check--certi float-right col-6 no-horizon-padding"
+                        *ngIf="item.Device.certId">
+                    <span class="col-5 float-left no-horizon-padding">Current Certificate: </span>
+                    <span class="col-7 float-right no-horizon-padding">{{item.Device.certId}}</span>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <div class="form-inline certificate-device__actions float-right">
+            <button class="btn btn-secondary" (click)="onAttach()"
+                    [disabled]="certificateDeviceForm.form.invalid || certificateDeviceForm.form.pristine">
+              Attach
+            </button>
+            <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+          </div>
+      </div>
+    
+    </div>
+  </div>

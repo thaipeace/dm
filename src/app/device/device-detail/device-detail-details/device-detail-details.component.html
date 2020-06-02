@@ -1,0 +1,46 @@
+<section class="device-detail-details">
+  <div class="details-panel-body__item-value col-12">
+    <table class="tql-table">
+      <thead>
+        <tr>
+          <th>Device Name</th>
+          <th>Type</th>
+          <th>Last seen</th>
+          <th>Current state</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{device.DeviceName}}</td>
+          <td>{{device.Type}}</td>
+          <td>{{device.LastSeen | timeAgo}}</td>
+          <td>{{device.CurrentState}}</td>
+        </tr>
+      <tbody>
+        <tr>
+          <td colspan="4" class="cursor-pointer text-right" (click)="viewMore = !viewMore">
+            <i>See {{viewMore ? 'less' : 'all'}} Details</i>
+          </td>
+        </tr>
+        <tr *ngIf="viewMore">
+          <td colspan="4">
+            <table class="tql-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let key of deviceFilteredKeys; let i = index">
+                  <td>{{key}}</td>
+                  <td>{{device[key]}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

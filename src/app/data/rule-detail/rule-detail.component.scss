@@ -1,0 +1,45 @@
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.overflow-y-scroll {
+  overflow-y: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.h-70 {
+  height: 70%;
+}
+
+.minh-20 {
+  min-height: 20vh;
+}
+
+.background-grey {
+  background-color: #f9f9f9;
+}
+
+.number-round {
+  border: 1px solid #d6d6d6;
+	padding: 4px 3px;
+	border-radius: 10px;
+	height: 20px;
+	line-height: 9px;
+	width: 20px;
+	margin-right: 10px;
+	font-size: 80%;
+}
+
+.step-active {
+  span {
+    color: blue;
+  }
+}
+
+.default-container-content {
+	height: calc(100vh - 150px);
+}

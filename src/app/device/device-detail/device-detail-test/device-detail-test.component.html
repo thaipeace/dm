@@ -1,0 +1,25 @@
+<section class="device-test">
+  <div *ngIf="deviceTest">
+    <table class="tql-table">
+      <thead>
+        <tr>
+          <th>Device Name</th>
+          <th>Last run</th>
+          <th>Test status</th>
+          <th>Test phrase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{device.DeviceName}}</td>
+          <td>{{deviceTest.DeviceTest.LastRun.$.Value | timeAgo}}</td>
+          <td>{{deviceTest.DeviceTest.LastStatus.$.Value}}</td>
+          <td>{{deviceTest.DeviceTest.Name.$.Value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="!deviceTest">
+    There is no test here.
+  </div>
+</section>

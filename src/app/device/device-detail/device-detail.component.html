@@ -1,0 +1,60 @@
+<div class="details-panel">
+  <section class="details-panel-header d-flex justify-content-between align-items-center">
+    <div class="details-panel-header__name text-uppercase" *ngIf="device">{{device.DeviceName}}</div>
+    <div>
+      <div class="details-panel-header__action">
+        <div ngbDropdown class="d-inline-block">
+          <div class="tql-button tql-button-blue details-panel-header__action-button" id="dropdownBasic1" ngbDropdownToggle>Actions</div>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <span class="ngbDropdown__item-action details-panel-header__item-action--edit dropdown-item"
+                  (click)="showUpsertDeviceForm()">Edit</span>
+            <span class="ngbDropdown__item-action details-panel-header__item-action--remove dropdown-item"
+                  (click)="removeDevice()">Remove</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="details-panel-body col-12">
+    <div class="row">
+      <aside class="col-12 col-md-2">
+        <div class="details-panel-body__menu-container">
+          <div class="details-panel-body__menu-item" (click)="viewContent('details')"
+               [ngClass]="{'active': currentView === 'details'}">Details
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('alerts')"
+               [ngClass]="{'active': currentView === 'alerts'}">Alerts
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('deployedApplication')"
+               [ngClass]="{'active': currentView === 'deployedApplication'}">Deployed Applications
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('security')"
+               [ngClass]="{'active': currentView === 'security'}">Security
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('test')"
+               [ngClass]="{'active': currentView === 'test'}">Test
+          </div>
+        </div>
+      </aside>
+      <main class="col-12 col-md-10" id="device-detail-body-main-content-id">
+        <div class="details-panel-body__main-content" *ngIf="device">
+          <div *ngIf="currentView === 'details'" class="row">
+            <div class="col-12">
+              <app-device-detail-details [device]="device" (reloadDevice)="getDeviceById($event)"></app-device-detail-details>
+            </div>
+            <!-- <div class="col-12 col-md-6">
+              <app-heartbeat-chart [device]="device" class="col-12 col-md-6"></app-heartbeat-chart>
+            </div> -->
+          </div>
+          
+          <app-device-detail-security *ngIf="currentView === 'security'"
+            [device]="device" (reloadDevice)="getDeviceById($event)"></app-device-detail-security>
+          <app-application-deployment *ngIf="currentView === 'deployedApplication'"
+            [thing]="device"></app-application-deployment>
+          <app-device-detail-test *ngIf="currentView === 'test'"
+            [device]="device"></app-device-detail-test>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>

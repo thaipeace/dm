@@ -1,0 +1,26 @@
+@import "~src/sass/custom_variables";
+
+.bread-crumbs {
+  font-size: 16px !important;
+  margin-left: 15px !important;
+  .breadcrumb {
+    &__item {
+      font-size: 13px;
+    }
+
+    &__item-icon {
+      color: $cl_white;
+    }
+
+    &__item-link {
+      color: $cl_white;
+      &:hover {
+        color: $cl_text_blue;
+      }
+    }
+
+    &__item-nolink {
+      color: $cl_text_blue;
+    }
+  }
+}

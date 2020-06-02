@@ -1,0 +1,63 @@
+.certificate-detail-header-container {
+    padding: 15px;
+    background: #f7f7f7;
+}
+
+.certificate-detail-header {
+    height: 110px;
+    background: #002630;
+    color: #fff;
+    position: relative;
+    padding: 30px;
+
+    &__title {
+        label {
+            font-size: 80%;
+            opacity: 0.5;
+        }
+    }
+
+    &__name {
+        font-size: 150%;
+    }
+
+    &__action-container {
+        float: right;
+    }
+
+    &__action-button {
+        font-size: 80%;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    &__item-action {
+        font-size: 80%;
+        cursor: pointer;
+        
+        &--download {
+            a {
+                color: #212529;
+                display: block;
+            }
+        }
+    }
+}
+
+.certificate-detail-body {
+    padding: 30px;
+
+    &__menu-item {
+        line-height: 40px;
+        cursor: pointer;
+
+        &.active,
+        &:hover {
+            text-decoration: underline
+        }
+    }
+
+    &__main-content {
+        width: 100%;
+    }
+}

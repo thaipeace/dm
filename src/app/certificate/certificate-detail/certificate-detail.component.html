@@ -1,0 +1,52 @@
+<div class="details-panel">
+  <section class="details-panel-header">
+    <div class="details-panel-header__title">
+      <label>CERTIFICATE</label>
+      <div class="details-panel-header__name" *ngIf="certificate">{{certificate.commonName}}</div>
+    </div>
+    <div class="details-panel-header__action-container">
+      <div class="details-panel-header__action">
+        <div ngbDropdown class="d-inline-block">
+          <div class="details-panel-header__action-button" id="dropdownBasic1" ngbDropdownToggle>Actions</div>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="certificate">
+              <span class="details-panel-header__item-action details-panel-header__item-action--attach dropdown-item"
+                    (click)="showAttachDeviceDialog(certificate)">Attach device</span>
+            <span class="details-panel-header__item-action details-panel-header__item-action--download dropdown-item">
+                  <a href="{{baseUrl}}{{certificate.zipFileURL}}" download>Download</a>
+              </span>
+            <span class="details-panel-header__item-action details-panel-header__item-action--remove dropdown-item"
+                  (click)="removeCertificate(certificate.certId)"
+                  *ngIf="!devices?.length">Remove</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="details-panel-body col-12">
+    <div class="row">
+      <aside class="col-12 col-md-2">
+        <div class="details-panel-body__menu-container">
+          <div class="details-panel-body__menu-item" (click)="viewContent('details')"
+               [ngClass]="{'active': currentView === 'details'}">Details
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('security')"
+               [ngClass]="{'active': currentView === 'policies'}">Policies
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('things')"
+               [ngClass]="{'active': currentView === 'things'}">Devices
+          </div>
+        </div>
+      </aside>
+      <main class="col-12 col-md-10" id="certificate-detail-body-main-content-id">
+        <div class="details-panel-body__main-content" *ngIf="certificate">
+          <app-certificate-detail-details *ngIf="currentView === 'details'"
+                                          [certificate]="certificate"></app-certificate-detail-details>
+          <app-certificate-detail-things *ngIf="currentView === 'things'"
+                                         [certificate]="certificate"
+                                         [devices]="devices"
+                                         (updateDevices)="getAllDeviceByCertificateId($event)"></app-certificate-detail-things>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>

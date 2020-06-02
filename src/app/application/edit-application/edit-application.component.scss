@@ -1,0 +1,73 @@
+.application-detail-header-container {
+    padding: 15px;
+    background: #f7f7f7;
+}
+
+.application-detail-header {
+    height: 110px;
+    background: #002630;
+    color: #fff;
+    position: relative;
+    padding: 30px;
+
+    &__title {
+        label {
+            font-size: 80%;
+            opacity: 0.5;
+        }
+    }
+
+    &__name {
+        font-size: 150%;
+    }
+
+    &__action-container {
+        float: right;
+    }
+
+    &__action-button {
+        font-size: 80%;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    &__item-action {
+        font-size: 80%;
+        cursor: pointer;
+    }
+}
+
+.application-detail-body {
+    padding: 30px;
+
+    &__menu-item {
+        line-height: 40px;
+        cursor: pointer;
+
+        &.active,
+        &:hover {
+            text-decoration: underline
+        }
+    }
+
+    &__main-content {
+        width: 100%;
+    }
+
+    &__item-value {
+        white-space: pre-wrap;
+    }
+}
+
+.application-edit {
+    &__actions {
+        &--disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .btn + .btn {
+            margin-left: 15px; 
+        }
+    }
+}

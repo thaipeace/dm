@@ -1,0 +1,885 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,300italic,400italic,500,500italic,700,700italic,900,900italic);
+@import './variables';
+@import './mixin';
+@import './default';
+
+$themeConfig: 'dark' '', 'light' 'light';
+
+@mixin renderTheme($theme) {
+  background-color: theme-color($theme, '$cl_bg');
+  * {
+    &:not(.fa):not(.fas):not(.far):not(.fal) {
+      font-family: 'Roboto', sans-serif;
+    }
+  }
+
+  body {
+    background-color: theme-color($theme, '$cl_bg');
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+
+  p, span {
+    color: theme-color($theme, '$cl_text');
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    &.list-unstyled {
+      padding-left: 0;
+      > li {
+        list-style: none;
+      }
+    }
+    &.list-inline {
+      > li {
+        display: inline-block;
+      }
+    }
+  }
+
+  .main-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: $height_header 0 $height_footer $width_sidebar;
+    background-color: theme-color($theme, '$cl_bg');
+  }
+
+  /*header*/
+  .tql-header {
+    height: $height_header;
+    width: 100%;
+    background-color: theme-color($theme, '$cl_top_bar');
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    .logo {
+      height: 50px;
+      width: 70px;
+      min-width: $width_sidebar;
+      text-align: center;
+      line-height: 50px;
+      img {
+        height: 70%;
+      }
+    }
+    ul.tql-navbar {
+      margin: 0;
+      height: 50px;
+      > li {
+        &.active {
+          > a {
+            background-color: theme-color($theme, '$cl_bg');
+            color: theme-color($theme, '$cl_bar_menu_item_text_hover');
+            span {
+              color: theme-color($theme, '$cl_bar_menu_item_text_hover');
+            }
+          }
+        }
+        /*a {
+          cursor: pointer;
+          overflow: hidden;
+          position: relative;
+          display: block;
+          padding: 10px;
+          font-size: 20px;
+          color: theme-color($theme, '$cl_bar_menu_item_text');
+          text-align: left;
+          height: $height_header;
+          box-sizing: border-box;
+          &:focus {
+            text-decoration: none;
+          }
+          &:hover {
+            text-decoration: none;
+            background-color: theme-color($theme, '$cl_bg');
+            color: theme-color($theme, '$cl_bar_menu_item_text_hover');
+            span {
+              color: theme-color($theme, '$cl_bar_menu_item_text_hover');
+            }
+          }
+          > * {
+            vertical-align: middle;
+          }
+          .icon {
+            display: inline-block;
+            text-align: center;
+            width: 30px;
+            text-align: center;
+          }
+          img {
+            width: 30px;
+            height: 30px;
+          }
+          > span {
+            font-size: 14px;
+            font-weight: 400;
+            overflow: hidden;
+            display: inline-block;
+            padding: 0 5px;
+            color: theme-color($theme, '$cl_bar_menu_item_text');
+          }
+          &.min {
+            > span {
+              padding: 0;
+              max-width: 0;
+              @include transition(all 0.3s linear);
+            }
+            &:hover {
+              > span {
+                padding: 0 5px;
+                max-width: 100%;
+              }
+            }
+          }
+        }*/
+      }
+    }
+    /*Header right*/
+    &__right {
+      width: 70%;
+      text-align: right;
+      & > div,
+      & > ul {
+        @extend %display-list;
+      }
+      a {
+        color: theme-color($theme, '$cl_table_header_text');
+      }
+    }
+    .notification {
+      & > a {
+        display: block;
+        & > i, span {
+          @extend %display-list;
+          color: theme-color($theme, '$cl_table_header_text');
+        }
+        & > i {
+          font-size: 25px;
+          margin: 0 5px 0 0;
+        }
+        & > span {
+          background-color: $cl_red;
+          @include border-radius(12px);
+          line-height: 24px;
+          padding: 0 14px;
+          font-size: 13px;
+        }
+      }
+      &:hover,
+      &:focus {
+        opacity: .85;
+        i {
+          color: $cl_red;
+        }
+      }
+    }
+    .user {
+      margin: 0 24px;
+      @media screen and (max-width: 767px) {
+        margin: 0 10px;
+      }
+      & > div {
+        @extend %display-list;
+      }
+      &__image {
+        @include square(34px);
+        @include border-radius(50%);
+        background-color: $cl_middle_blue;
+        @media screen and (max-width: 767px) {
+          @include square(25px);
+        }
+      }
+      &__info {
+        position: relative;
+        color: $cl_white;
+        &__name {
+          margin: 0 0 0 10px;
+          cursor: pointer;
+          font-size: 13px;
+          @media screen and (max-width: 767px) {
+            font-size: 0;
+          }
+          &:after {
+            content: '';
+            display: inline-block;
+            @include square(0);
+            border-style: solid;
+            border-width: 6px 4px 0 4px;
+            border-color: $cl_white transparent transparent transparent;
+            margin: 0 0 0 75px;
+            @include transition(all .2s ease-in-out);
+            @media screen and (max-width: 767px) {
+              margin: 0;
+            }
+          }
+          &.active + .user__info__detail {
+            display: block !important;
+          }
+          &.active::after {
+            @include rotate(180deg);
+          }
+        }
+        &__detail {
+          position: absolute;
+          background-color: $cl_middle_blue;
+          z-index: 10;
+          list-style: none;
+          margin: 5px 0 0 10px;
+          padding: 12px 0 10px;
+          width: 130px;
+          @include box-shadow(0, 1px, 2px, rgba(0, 0, 0, 0.2));
+          top: 25px;
+          text-align: left;
+          display: none;
+          @media screen and (max-width: 767px) {
+            left: -20px;
+          }
+          &:before {
+            content: '';
+            display: inline-block;
+            @include square(0);
+            border-style: solid;
+            border-width: 0 7.5px 10px 7.5px;
+            border-color: transparent transparent $cl_middle_blue transparent;
+            position: absolute;
+            top: -10px;
+            left: 15px;
+          }
+          & > li {
+            margin: 0 5px 5px;
+            font-size: 13px;
+            padding: 0 15px 0;
+            line-height: 30px;
+            position: relative;
+            &:after {
+              content: '';
+              display: inline-block;
+              border-bottom: 1px solid $cl_white;
+              width: 0;
+              @include transition(width .3s ease-in-out);
+              position: absolute;
+              left: 0;
+              bottom: 0;
+            }
+            &:hover,
+            &:focus {
+              &:after {
+                width: 100%;
+              }
+            }
+            & > a {
+              color: $cl_white;
+              & > i {
+                margin: 0 5px 0 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /*footer*/
+  .tql-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: $height_footer;
+    width: 100%;
+    z-index: 1;
+    background-color: theme-color($theme, '$cl_bg');
+    color: theme-color($theme, '$cl_text');
+    padding: 5px 10px 2px 10px;
+    font-size: 12px;
+    box-sizing: border-box;
+  }
+
+  /*side bar*/
+  .tql-side-bar {
+    position: fixed;
+    top: $height_header;
+    left: 0;
+    background-color: theme-color($theme, '$cl_side_bar');
+    height: calc(100vh - #{$height_header});
+    max-width: $width_sidebar;
+    min-width: $width_sidebar;
+    overflow: hidden;
+    z-index: 2;
+    padding: 10px 0;
+    > div {
+      height: 100%;
+    }
+    @include transition(all 0.3s ease-in-out);
+    &:hover {
+      max-width: 1000px;
+      min-width: 200px;
+      .invisible {
+        visibility: visible;
+      }
+    }
+    ul {
+      margin: 0;
+      white-space: nowrap;
+      > li {
+        &.active {
+          > a {
+            background-color: theme-color($theme, '$cl_side_bar_hover');
+          }
+        }
+        a {
+          overflow: hidden;
+          position: relative;
+          display: block;
+          padding: 10px 20px;
+          font-size: 20px;
+          color: theme-color($theme, '$cl_bar_menu_item_text');
+          text-align: left;
+          height: $height_menu;
+          box-sizing: border-box;
+          &:focus {
+            text-decoration: none;
+          }
+          &:hover {
+            text-decoration: none;
+            background-color: theme-color($theme, '$cl_side_bar_hover');
+          }
+          > * {
+            vertical-align: middle;
+          }
+          .icon {
+            display: inline-block;
+            text-align: center;
+            width: 30px;
+            text-align: center;
+          }
+          img {
+            width: 30px;
+            height: 30px;
+          }
+          span {
+            padding: 0 50px 0 25px;
+            color: $cl_white;
+            font-size: 16px;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+
+  /*panel*/
+  .tql-panel {
+    border-radius: 0;
+    border: none;
+    background-color: theme-color($theme, '$cl_panel');
+    color: theme-color($theme, '$cl_text');
+    &:first-child {
+      //padding: 0 0 10px;
+    }
+    & > .panel-heading {
+      & > h4 {
+        line-height: 1;
+        padding: 20px 0;
+        margin: 0;
+        font-size: 16px;
+        text-transform: uppercase;
+        display: inline-block;
+      }
+    }
+    .panel-heading {
+      padding: 0 15px;
+      > * {
+        margin: 0 0 20px;
+        line-height: 1;
+        color: theme-color($theme, '$cl_text');
+      }
+    }
+
+    .panel-success {
+      padding: 0 15px;
+      color: theme-color($theme, '$cl_success');
+      text-transform: uppercase;
+      font-size: 16px;
+    }
+
+    .panel-body {
+      padding: 0 15px;
+    }
+
+    .disabled {
+      color: #335065;
+    }
+
+    .panel-footer {
+      padding: 15px;
+      border: none;
+    }
+    .sub-title {
+      float: right;
+      margin: 0;
+      padding: 20px 0;
+      font-size: 13px;
+    }
+  }
+
+  /*form*/
+  .tql-form-group {
+    //margin-bottom: 15px;
+    > * {
+      display: block;
+    }
+    label {
+      font-size: 13px;
+      max-width: 100%;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, .select-box, select {
+      @include input-focus();
+      font-size: 13px;
+      background-color: theme-color($theme, '$cl_input');
+      color: theme-color($theme, '$cl_input_text');
+      padding: 0px 15px;
+      border: none;
+      border-radius: 0;
+      height: 36px;
+      box-sizing: border-box;
+      width: 100%;
+      &:focus {
+        @include box-shadow(0, 0, 0, 0);
+        border: 1px solid $cl_alert_blue;
+      }
+      &::-webkit-input-placeholder {
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+
+      &:-moz-placeholder {
+        /* Firefox 18- */
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+
+      &::-moz-placeholder {
+        /* Firefox 19+ */
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+
+      &:-ms-input-placeholder {
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+
+      &.error {
+        color: $cl_input_text_error;
+        border: 1px solid $cl_input_text_error;
+        background-color: theme-color($theme, '$cl_input_bg');
+      }
+
+      &.disabled, &[disabled] {
+        //background-color: rgba(theme-color($theme, '$cl_input'), 0.5);
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      &.readonly, &[readonly] {
+        cursor: not-allowed;
+      }
+    }
+    input.other::-webkit-input-placeholder {
+      color: $cl_red;
+    }
+    select {
+      padding-left: 12px;
+    }
+    .tql-input {
+      display: block;
+      width: 100%;
+      height: auto;
+      padding: 0.375rem 0.75rem;
+      font-size: 13px;
+      line-height: 1.5;
+      color: theme-color($theme, '$cl_input_text');
+      background-color: theme-color($theme, '$cl_input_bg');
+      background-clip: padding-box;
+      box-sizing: border-box;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .select-box {
+      line-height: 36px;
+      padding: 0 15px;
+      height: 36px;
+      cursor: pointer;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      &.placeholder {
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+    }
+    textarea {
+      @include input-focus();
+      font-size: 13px;
+      background-color: theme-color($theme, '$cl_input');
+      color: theme-color($theme, '$cl_input_text');
+      padding: 15px;
+      border: none;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+
+      &.tql-input-text {
+        color: theme-color($theme, '$cl_tql_input');
+        border: 1px solid theme-color($theme, '$cl_success');
+        background-color: theme-color($theme, '$cl_input_bg');
+      }
+
+      &::-webkit-input-placeholder {
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+
+      &:-moz-placeholder {
+        /* Firefox 18- */
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+
+      &::-moz-placeholder {
+        /* Firefox 19+ */
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+
+      &:-ms-input-placeholder {
+        color: theme-color($theme, '$cl_input_text_placeholder');
+      }
+    }
+  }
+
+  /*table*/
+  .tql-table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    //border: 1px theme-color($theme, '$cl_table_border') solid;
+    width: 100%;
+    > thead {
+      background-color: theme-color($theme, '$cl_table_header');
+      > tr {
+        > th {
+          font-size: 16px;
+          color: theme-color($theme, '$cl_table_header_text');
+          border-width: 0 !important;
+          padding: 15px;
+          text-align: left;
+          font-weight: bold;
+        }
+      }
+    }
+
+    > tbody {
+      > tr {
+        > td {
+          font-size: 16px;
+          color: theme-color($theme, '$cl_text');
+          border-top-width: 0;
+          border-right: 1px theme-color($theme, '$cl_table_border') solid;
+          padding: 15px;
+          &:first-child {
+            //border-left: 1px theme-color($theme, '$cl_table_border') solid;
+          }
+          &:last-child {
+            border-right-width: 0;
+            //border-right: 1px theme-color($theme, '$cl_table_border') solid;
+          }
+        }
+        &:nth-child(even) {
+          > td {
+            background-color: theme-color($theme, '$cl_table_row_2');
+          }
+        }
+        &:nth-child(odd) {
+          > td {
+            background-color: theme-color($theme, '$cl_table_row_1');
+          }
+        }
+        &:last-child {
+          > td {
+            //border-bottom: 1px theme-color($theme, '$cl_table_border') solid;
+          }
+        }
+      }
+    }
+  }
+
+  /*bread-crumbs*/
+  .bread-crumbs {
+    color: theme-color($theme, '$cl_text');
+    font-size: 16px;
+    padding: 0;
+    > li {
+      padding-left: 5px;
+      padding-right: 5px;
+      &.active {
+        color: theme-color($theme, '$cl_breadcrumb_active');
+      }
+      a {
+        color: theme-color($theme, '$cl_link_breadcrumb');
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  /*alert*/
+  .tql-alert {
+    padding: 10px 40px 10px 15px;
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    span {
+      color: white;
+    }
+    &.alert-blue {
+      background-color: $cl_alert_blue;
+    }
+    &.alert-green {
+      background-color: $cl_alert_green;
+    }
+    &.alert-red {
+      background-color: $cl_alert_red;
+    }
+  }
+
+  /*dialog*/
+  .tql-dialog {
+    .modal-content {
+      background-color: theme-color($theme, '$cl_modal_bg');
+      border-width: 0;
+      border-radius: 0;
+      .modal-header {
+        border-width: 0;
+        padding: 40px 40px 30px 40px;
+        position: relative;
+        .modal-title {
+          color: theme-color($theme, '$cl_modal_title');
+          font-size: 18px;
+          font-weight: bold;
+        }
+        .close {
+          color: theme-color($theme, '$cl_modal_close');
+          position: absolute;
+          top: 18px;
+          right: 18px;
+          padding: 0;
+          margin: 0;
+          font-size: 20px;
+          text-shadow: none;
+        }
+      }
+      .modal-body {
+        padding: 0 40px;
+        .tql-form-group {
+          label {
+            font-weight: normal;
+            font-size: 12px;
+          }
+        }
+      }
+      .modal-error {
+        margin: 20px 0;
+        & > span {
+          display: block;
+          font-size: 12px;
+          letter-spacing: 0.05em;
+          line-height: 1.72;
+        }
+      }
+      .modal-footer {
+        border-width: 0;
+        padding: 30px 40px 40px 40px;
+
+      }
+
+    }
+  }
+
+  .button-group {
+    > button {
+      margin-right: 15px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  /* Start Custom Checkbox */
+  .tql-checkbox {
+    display: block;
+    position: relative;
+    margin: 0;
+    height: 18px;
+    line-height: 18px;
+    min-width: 18px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: theme-color($theme, '$cl_checkbox_text');
+  }
+
+  /* Hide the browser's default checkbox */
+  .tql-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Create a custom tickmark */
+  .tickmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 1px solid theme-color($theme, '$cl_checkbox_border');
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  .tql-checkbox input:checked ~ .tickmark {
+    background-color: theme-color($theme, '$cl_side_bar_hover');
+    border: 1px solid theme-color($theme, '$cl_side_bar_hover');
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .tickmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .tql-checkbox input:checked ~ .tickmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .tql-checkbox .tickmark:after {
+    left: 6px;
+    top: 1px;
+    width: 5px;
+    height: 11px;
+    border: 1px solid theme-color($theme, '$cl_tickmark_border');
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  /* End Custom Checkbox */
+
+  /* Start Custom Radio */
+  .tql-radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: theme-color($theme, '$cl_radio_text');
+  }
+
+  /* Hide the browser's default radio button */
+  .tql-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Create a custom radio button */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: theme-color($theme, '$cl_radio_bg');
+    border: 1px solid theme-color($theme, '$cl_radio_border');
+    border-radius: 50%;
+    outline: none;
+  }
+
+  /* When the radio button is checked, add a white background */
+  .tql-radio input:checked ~ .checkmark {
+    background-color: theme-color($theme, '$cl_radio_bg');
+    border: 1px solid theme-color($theme, '$cl_side_bar_hover');
+  }
+
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the indicator (dot/circle) when checked */
+  .tql-radio input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the indicator (dot/circle) */
+  .tql-radio .checkmark:after {
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: theme-color($theme, '$cl_side_bar_hover');
+  }
+  /* End Custom Radio */
+
+  /*others*/
+  .tql- {
+    &padding- {
+      &20 {
+        padding: 20px;
+      }
+    }
+    &form {
+      .tql-form-group {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  ul {
+    margin: 0;
+  }
+
+  .disabled-half {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+}
+
+@each $theme in $themeConfig {
+  @if nth($theme, 2) == '' {
+    html.tql {
+      @include renderTheme(nth($theme, 1))
+    }
+  } @else {
+    html.tql {
+      &.#{nth($theme, 1)} {
+        @include renderTheme(nth($theme, 1))
+      }
+    }
+  }
+}
+

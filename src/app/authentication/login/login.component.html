@@ -1,0 +1,26 @@
+<section class="login-wrapper d-flex align-items-center justify-content-center" id="login-wrapper-id">
+  <div class="tql-panel">
+    <div class="panel-body">
+      <h2 class="login__title text-center">Login</h2>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="login__form">
+        <div class="tql-form-group login__username">
+          <label for="username">Username</label>
+          <input type="text" [(ngModel)]="username" class="form-control" name="username" required/>
+        </div>
+        <div class="tql-form-group login__password">
+          <label for="password">Password</label>
+          <input type="password" [(ngModel)]="password" class="form-control" name="password"
+            required autocomplete="new-password"/>
+        </div>
+        <div class="tql-form-group" *ngIf="message">
+          <div class="fail-message alert alert-danger">{{message}}</div>
+        </div>
+        <div class="tql-form-group">
+          <button class="tql-button tql-button-blue shadow-sm float-right"
+            [disabled]="loginForm.form.invalid || loginForm.form.pristine">Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

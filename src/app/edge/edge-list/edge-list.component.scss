@@ -1,0 +1,106 @@
+.edge-search {
+  &__text {
+    margin: 0;
+  }
+}
+
+.edge-reload {
+  cursor: pointer;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.edge-list-wrapper {
+  position: relative;
+}
+
+.edge-list {
+  display: table;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  &__header {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  &__item-id {
+    & > a {
+      color: #000;
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+
+  &__title {
+    font-size: 20px;
+    padding: 0;
+    margin-right: 15px;
+    text-transform: uppercase;
+    caption-side: top;
+
+  }
+
+  &__title-type {
+    font-size: 14px;
+    text-transform: capitalize;
+    cursor: pointer;
+  }
+
+  &__title-type-item {
+    line-height: 40px;
+    &--active {
+      color: var(--blue) !important;
+    }
+  }
+
+  &__item-action {
+    margin: 0 20px 0 0;
+    cursor: pointer;
+    color: var(--blue);
+
+    & + .edge-list__item-action {
+      margin: 0;
+    }
+  }
+
+  &__paging-more {
+    cursor: pointer;
+  }
+
+  &__item-action-wrapper {
+    min-width: 20px;
+    text-align: center;
+  }
+
+  &__item-action-button {
+    cursor: pointer;
+    &::after {
+      display: none;
+    }
+  }
+
+  &__paging-wrapper {
+    margin: 15px 0;
+    padding: 0;
+  }
+}
+
+.edge-create {
+  & + .edge-create {
+    margin-left: 15px;
+  }
+}
+
+app-edge-list-map {
+  display: block;
+  height: 100%;
+}
+
+#edit-edge-spinner {
+  position: relative;
+}

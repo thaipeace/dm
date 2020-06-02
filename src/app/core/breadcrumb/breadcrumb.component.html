@@ -1,0 +1,12 @@
+<ul class="list-inline bread-crumbs">
+  <li class="breadcrumb__item"><a class="breadcrumb__item-link" routerLink="">Home</a></li>
+  <ng-container *ngFor="let breadcrumb of breadcrumbs;">
+    <li class="breadcrumb__item">
+      <i class="breadcrumb__item-icon fa fa-long-arrow-right"></i>
+    </li>
+    <li class="breadcrumb__item">
+      <span class="breadcrumb__item-nolink" *ngIf="!breadcrumb.url">{{ breadcrumb.label }}</span>
+      <a [routerLink]="[breadcrumb.url]" class="breadcrumb__item-link" *ngIf="breadcrumb.url">{{ breadcrumb.label }}</a>
+    </li>
+  </ng-container>
+</ul>

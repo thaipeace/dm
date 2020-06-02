@@ -1,0 +1,221 @@
+<div class="tql-dialog modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form #edgeEditForm="ngForm" name="edge-edit-form" class="edge-edit tql-form">
+        <div class="modal-header">
+          <h4 class="modal-title">{{title}}</h4>
+          <button type="button" class="close" (click)="close()" >&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row no-gutter justify-content-center align-items-center mb-4 h6 text-center text-secondary">
+            <div class="col-3 d-flex justify-content-center align-items-center" [ngClass]="{'step-active': edgeCreate.tab === 'general'}">
+              <span class="number-round d-flex justify-content-center align-items-center">
+                <span *ngIf="!tabType.general.done">1</span>
+                <i class="far fa-check" *ngIf="tabType.general.done"></i>
+              </span>
+              <span>General</span>
+            </div>
+            <div class="col-3 d-flex justify-content-center align-items-center" [ngClass]="{'step-active': edgeCreate.tab === 'details'}">
+              <span class="number-round d-flex justify-content-center align-items-center">
+                <span *ngIf="!tabType.details.done">2</span>
+                <i class="far fa-check" *ngIf="tabType.details.done"></i>
+              </span>
+              <span>Details</span>
+            </div>
+            <div class="col-6 d-flex justify-content-center align-items-center" [ngClass]="{'step-active': edgeCreate.tab === 'network'}">
+              <span class="number-round d-flex justify-content-center align-items-center">
+                <span *ngIf="!tabType.network.done">3</span>
+                <i class="far fa-check" *ngIf="tabType.network.done"></i>
+              </span>
+              <span>Network Configuration</span>
+            </div>
+          </div>
+          <div *ngIf="edgeCreate.tab === 'general'">
+            <div class="row">
+              <div class="col-6 tql-form-group float-left edge-edit__name required">
+                <label for="edgeName" class="col-12 col-form-label no-horizon-padding">Edge ID</label>
+                <input type="text" class="form-control edge-edit__name-input" required
+                  name="edgeName" id="edge-edit-name" placeholder="Edge ID"
+                  [(ngModel)]="selectedEdge.name" #edgeName="ngModel" (focusout)="onFocusOutEdgeName()">
+                <small class="text-danger position-absolute" *ngIf="errorMessage.duplicateEdgeName">
+                  <i>{{errorMessage.duplicateEdgeName}}</i>
+                </small>
+              </div>
+              <div class="col-6 tql-form-group float-left edge-edit__region required">
+                <label for="edgeRegion" class="col-12 col-form-label no-horizon-padding">Region</label>
+                <input type="text" class="form-control edge-edit__region-input" required
+                        name="edgeRegion" id="edge-edit-region" placeholder="Region"
+                        [(ngModel)]="selectedEdge.region" #edgeRegion="ngModel">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 tql-form-group float-left edge-edit__location required">
+                <label for="location" class="col-12 col-form-label no-horizon-padding">Location</label>
+                <input type="text" class="form-control edge-edit__location-input" 
+                  (focusout)="onLocationFocusOut()" (keyup.enter)="onLocationFocusOut()"
+                  name="location" id="edge-edit-location" placeholder="Click on map to select position"
+                  [(ngModel)]="selectedEdge.location" #location="ngModel" required>
+              </div>
+              <div class="col-12 location-map">
+                <agm-map class="h-100" [latitude]="38.8752665" [longitude]="-105.0425666" [zoom]="4"
+                  (mapClick)="positionPlaceMarker($event)">
+                  <agm-marker [latitude]="goLocation.lat" [longitude]="goLocation.long" *ngIf="goLocation.lat && goLocation.long"
+                    [iconUrl]="'assets/images/marker-red.png'"></agm-marker>
+                </agm-map>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="edgeCreate.tab === 'details'">
+            <div class="row">
+              <div class="col-6 tql-form-group float-left edge-edit__address1">
+                <label for="address1" class="col-12 col-form-label no-horizon-padding">Address 1</label>
+                <input type="text" class="col-12 form-control edge-edit__address1-input"
+                        name="address1" id="edge-edit-address1" placeholder="Address 1"
+                        [(ngModel)]="selectedEdge.address1" #address1="ngModel"/>
+              </div>
+              <div class="col-6 tql-form-group float-left edge-edit__address2">
+                <label for="address2" class="col-12 col-form-label no-horizon-padding">Address 2</label>
+                <input type="text" class="col-12 form-control edge-edit__address2-input"
+                        name="address2" id="edge-edit-address2" placeholder="Address 2"
+                        [(ngModel)]="selectedEdge.address2" #address2="ngModel"/>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__country">
+                <label for="country" class="col-12 col-form-label no-horizon-padding">Country</label>
+                <select name="country" [(ngModel)]="selectedEdge.country" ngModel
+                        class="col-12 form-control edge-edit__country-input">
+                  <option value="" selected>Select a country</option>
+                  <option *ngFor="let country of countries; let i=index" [ngValue]="country.name">{{country.name}}</option>
+                </select>
+              </div>
+              <div class="col-6 tql-form-group float-left edge-edit__zip">
+                <label for="zip" class="col-12 col-form-label no-horizon-padding ">Zip Code</label>
+                <input type="text" class="col-12 form-control edge-edit__zip-input"
+                        name="zip" id="edge-edit-zip" placeholder="Zip Code"
+                        [(ngModel)]="selectedEdge.zip" #zip="ngModel"/>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__manager-name">
+                <label for="managerName" class="col-12 col-form-label no-horizon-padding">Edge Manager</label>
+                <input type="text" class="col-12 form-control edge-edit__manager-name"
+                        name="managerName" id="edge-edit-manager-name" placeholder="Edge Manager"
+                        [(ngModel)]="selectedEdge.managerName" #managerName="ngModel"/>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__email">
+                <label for="email" class="col-12 col-form-label no-horizon-padding">Email</label>
+                <input type="mail" class="col-12 form-control edge-edit__email"
+                        name="email" id="edge-edit-email" placeholder="Email"
+                        [(ngModel)]="selectedEdge.email" #email="ngModel"/>
+              </div>
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__phone">
+                <label for="phone" class="col-12 col-form-label no-horizon-padding">Phone</label>
+                <input type="text" class="col-12 form-control edge-edit__phone"
+                        name="phone" id="edge-edit-phone" placeholder="Phone"
+                        [(ngModel)]="selectedEdge.phone" #phone="ngModel"/>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="edgeCreate.tab === 'network'">
+            <div class="row">
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__private-address"
+                [ngClass]="{'required': publicAddress.value === ''}">
+                <label for="privateAddress" class="col-12 col-form-label no-horizon-padding">Private Address</label>
+                <input type="text" class="col-12 form-control edge-edit__private-address"
+                        name="privateAddress" id="edge-edit-private-address" placeholder="Private Address"
+                        [(ngModel)]="selectedEdge.privateAddress" #privateAddress="ngModel" required
+                        [disabled]="publicAddress.value !== ''">
+              </div>
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__private-port"
+                [ngClass]="{'required': privateAddress.value !== ''}">
+                <label for="privatePort" class="col-12 col-form-label no-horizon-padding">Port</label>
+                <input type="text" class="col-12 form-control edge-edit__private-port"
+                        name="privatePort" id="edge-edit-private-port" placeholder="Private Port"
+                        [(ngModel)]="selectedEdge.privatePort" #privatePort="ngModel" required
+                        [disabled]="privateAddress.value === ''">
+              </div>
+            </div>
+            <div class="row"><div class="col-12 text-center mb-2">--- or ---</div></div>
+            <div class="row">
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__public-address"
+                [ngClass]="{'required': privateAddress.value === ''}">
+                <label for="publicAddress" class="col-12 col-form-label no-horizon-padding">Public Address</label>
+                <input type="text" class="col-12 form-control edge-edit__public-address"
+                        name="publicAddress" id="edge-edit-public-address" placeholder="Public Address"
+                        [(ngModel)]="selectedEdge.publicAddress" #publicAddress="ngModel"
+                        [disabled]="privateAddress.value !== ''" required>
+              </div>
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__public-port"
+                [ngClass]="{'required': publicAddress.value !== ''}">
+                <label for="publicPort" class="col-12 col-form-label no-horizon-padding">Port</label>
+                <input type="text" class="col-12 form-control edge-edit__public-port"
+                        name="publicPort" id="edge-edit-public-port" placeholder="Public Port"
+                        [(ngModel)]="selectedEdge.publicPort" #publicPort="ngModel" required
+                        [disabled]="publicAddress.value === ''">
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__protocol required">
+                <label for="protocol" class="col-12 col-form-label no-horizon-padding">Communication Protocol</label>
+                <select name="protocol" [(ngModel)]="selectedEdge.protocol" ngModel
+                        class="col-12 form-control edge-edit__protocol-input" required>
+                  <option value="mqtt" selected>MQTT</option>
+                  <option value="http">HTTP</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-6 tql-form-group float-left required">
+                <label for="targetSchemaAppPackage" class="col-12 col-form-label no-horizon-padding">Edge models</label>
+                <select name="targetSchemaAppPackage" [(ngModel)]="selectedEdge.targetSchemaAppPackage" ngModel
+                        class="col-12 form-control" required>
+                  <option *ngFor="let app of applications; let i=index" [ngValue]="app">{{app.Name.$.Value}}</option>
+                </select>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__username required">
+                <label for="username" class="col-12 col-form-label no-horizon-padding">Username</label>
+                <input type="text" class="col-12 form-control edge-edit__username"
+                        name="username" id="edge-edit-username" placeholder="Username"
+                        [(ngModel)]="selectedEdge.username" #username="ngModel" required>
+              </div>
+              <div class="col-12 col-md-6 tql-form-group float-left edge-edit__password required">
+                <label for="password" class="col-12 col-form-label no-horizon-padding">Password</label>
+                <input type="password" class="col-12 form-control edge-edit__password"
+                        name="password" id="edge-edit-password" placeholder="Password"
+                        [(ngModel)]="selectedEdge.password" #password="ngModel" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <!-- <div class="form-check form-control border-0 col-6 col-lg-3">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="" id="add-another" name="addAnother"
+                       [(ngModel)]="isAddAnother">Add Another
+              </label>
+            </div> -->
+            
+            <div class="row no-gutter">
+              <div class="col-12 justify-self-start align-self-end">
+                <button class="tql-button tql-button-blue mx-2" *ngIf="tabType[edgeCreate.tab].back" (click)="onBackTap()">Back</button>
+                <button class="tql-button tql-button-blue mx-2" (click)="onNextTap()" *ngIf="tabType[edgeCreate.tab].next"
+                  [disabled]="edgeEditForm.form.invalid || !tabType[edgeCreate.tab].canNext">
+                  Next
+                </button>
+                <button class="tql-button tql-button-red mx-2" (click)="onSaveEdge()" *ngIf="!tabType[edgeCreate.tab].next"
+                  [disabled]="edgeEditForm.form.invalid || !tabType[edgeCreate.tab].canNext">
+                  Deploy
+                </button>
+              </div>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>

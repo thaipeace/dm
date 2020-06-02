@@ -1,0 +1,93 @@
+<div class="details-panel" *ngIf="rawEdge">
+  <section class="details-panel-header d-flex justify-content-between align-items-center">
+    <div class="details-panel-header__title text-uppercase">
+      <div class="details-panel-header__name" *ngIf="edge">{{rawEdge.Find.Result.Edge.DisplayName}}</div>
+    </div>
+    <div>
+      <div class="details-panel-header__action">
+        <div ngbDropdown class="d-inline-block">
+          <div class="tql-button tql-button-blue details-panel-header__action-button" id="dropdownBasic1" ngbDropdownToggle>Actions</div>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <span class="ngbDropdown__item-action details-panel-header__item-action--edit dropdown-item"
+                  (click)="activateEdge()" 
+                  *ngIf="rawEdge.Find.Result.Edge.Status !== 'Active'">Activate</span>
+            <span class="ngbDropdown__item-action details-panel-header__item-action--remove dropdown-item"
+                  (click)="deactivateEdge()"
+                  *ngIf="rawEdge.Find.Result.Edge.Status === 'Active'">Deactivate</span>
+            <span class="ngbDropdown__item-action details-panel-header__item-action--remove dropdown-item"
+                  (click)="deleteEdge()">Delete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="details-panel-body col-12">
+    <div class="row">
+      <aside class="col-12 col-md-2">
+        <div class="details-panel-body__menu-container">
+          <div class="details-panel-body__menu-item" (click)="viewContent('details')"
+               [ngClass]="{'active': currentView === 'details'}">Details
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('deployedApplication')"
+               [ngClass]="{'active': currentView === 'deployedApplication'}">Deployed Applications
+          </div>
+        </div>
+      </aside>
+      <main class="col-12 col-md-10" id="application-detail-body-main-content-id">
+        <div class="details-panel-body__main-content" *ngIf="edge">
+          <div class="row" *ngIf="currentView === 'details'">
+            <div class="details-panel-body__item-value col-12">
+              <table class="tql-table">
+                <thead>
+                  <tr>
+                    <th>Edge Name</th>
+                    <th>Region</th>
+                    <th>Address</th>
+                    <th>Port</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{edge.DisplayName}}</td>
+                    <td>{{edge.Region}}</td>
+                    <td>{{edge.Profile.PublicAddress || edge.Profile.PrivateAddress}}</td>
+                    <td>{{edge.Profile.PublicPort || edge.Profile.PrivatePort}}</td>
+                    <td>{{edge.Status || 'Down'}}</td>
+                  </tr>
+                <tbody>
+                  <tr>
+                    <td colspan="5" class="cursor-pointer text-right" (click)="viewMore = !viewMore">
+                      <i>See {{viewMore ? 'less' : 'all'}} Details</i>
+                    </td>
+                  </tr>
+                  <tr *ngIf="viewMore">
+                    <td colspan="5">
+                      <table class="tql-table">
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Datails</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let key of displayEdgeKeys; let i = index">
+                            <td>{{key}}</td>
+                            <td><app-tree-view [obj]="displayEdge[key]" [parentName]="key"></app-tree-view></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div *ngIf="currentView === 'deployedApplication'">
+            <app-application-deployment [thing]="edge"></app-application-deployment>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>

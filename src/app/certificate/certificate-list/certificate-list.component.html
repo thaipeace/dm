@@ -1,0 +1,72 @@
+<section class="certificate-list-container">
+  <div class="certificate-search clearfix">
+    <div class="certificate-create float-left">
+      <button class="tql-button tql-button-blue shadow-sm" (click)="showCreateCertificateModal()">Add new certificate</button>
+    </div>
+    <div class="certificate-reload float-left" (click)="getAllCertificate()">
+      <i class="far fa-sync-alt"></i>
+    </div>
+    <form name="certificate-search-form" class="col-3 no-horizon-padding float-right">
+      <div class="tql-form-group certificate-search__text">
+        <input type="text" class="form-control certificate-search__text-input" name="certificate-search-text" id="certificate-search-text"
+               placeholder="Search" [(ngModel)]="searchText">
+      </div>
+    </form>
+  </div>
+  <div class="certificate-list-wrapper default-container-content">
+    <div class="certificate-list table-responsive">
+      <table class="tql-table certificate-list" id="certificate-list-id">
+        <thead>
+          <tr class="certificate-list__header">
+            <th class="certificate-list__header-item">Name</th>
+            <th class="certificate-list__header-item">Certificate ID</th>
+            <th class="certificate-list__header-item">Attached Devices</th>
+            <th class="certificate-list__header-item"></th>
+          </tr>
+        </thead>
+        <tbody class="certificate-list__body">
+          <tr class="certificate-list__item" *ngFor="let item of certificates|listBySpecificFields : fieldsValuePairs : searchText; let i = index"
+              [ngClass]="{'odd': i%2 === 0, 'even': i%2 !== 0}">
+            <td class="certificate-list__item-id">
+              <a [routerLink]="['/certificates/certificate', item.DeviceCertificate.certId]">
+                {{item.DeviceCertificate.commonName}}
+              </a>
+            </td>
+            <td class="certificate-list__item-cert-id">{{item.DeviceCertificate.certId}}</td>
+            <td class="certificate-list__item-devices">
+              {{getDevicesByCertificate(item.DeviceCertificate.certId) || ''}}
+            </td>
+            <td class="certificate-list__item-action-wrapper">
+              <div ngbDropdown class="d-inline-block">
+                <div class="certificate-list__item-action-button" id="dropdownBasic1" ngbDropdownToggle>...</div>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <span class="certificate-list__item-action certificate-list__item-action--attach dropdown-item" (click)="showAttachDeviceDialog(item.DeviceCertificate)">Attach device</span>
+                  <span class="certificate-list__item-action certificate-list__item-action--download dropdown-item">
+                    <a href="{{baseUrl}}{{item.DeviceCertificate.zipFileURL}}" download>Download</a>
+                  </span>
+                  <span class="certificate-list__item-action certificate-list__item-action--remove dropdown-item" (click)="removeCertificate(item.DeviceCertificate.certId)"
+                        *ngIf="!getDevicesByCertificate(item.DeviceCertificate.certId)">Remove</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12 certificate-list__paging-wrapper">
+      <small class="certificate-list__paging" *ngIf="(originalCertificateList|listBySpecificFields:fieldsValuePairs:searchText).length !== 0">
+        <span>
+          <strong>{{(originalCertificateList|listBySpecificFields:fieldsValuePairs:searchText).length}}</strong> certificate(s) found.
+          Displaying
+          <strong>
+            {{(certificates|listBySpecificFields:fieldsValuePairs:searchText).length}} / {{(originalCertificateList|listBySpecificFields:fieldsValuePairs:searchText).length}}
+          </strong> certificate(s).
+        </span>
+        <span class="text-primary certificate-list__paging-more" (click)="loadLessMore()" *ngIf="(originalCertificateList|listBySpecificFields:fieldsValuePairs:searchText).length > listLimitCountDefault">
+          <span *ngIf="(certificates|listBySpecificFields:fieldsValuePairs:searchText).length < (originalCertificateList|listBySpecificFields:fieldsValuePairs:searchText).length">Load More</span>
+          <span *ngIf="(certificates|listBySpecificFields:fieldsValuePairs:searchText).length >= (originalCertificateList|listBySpecificFields:fieldsValuePairs:searchText).length">Less</span>
+        </span>
+      </small>
+    </div>
+  </div>
+</section>

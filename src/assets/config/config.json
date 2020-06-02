@@ -1,0 +1,37 @@
+{
+  "api": {
+    "url": "18.221.199.94",
+    "port": "9090",
+    "loginSuffix": "fid-TQLEngineManager",
+    "suffix": "fid-MOVMCWKAAAAKYGYCS45ZWAC5"
+  },
+  "ws": {
+    "suffix": "fid-MOVMCWKAAAAKYGYCS45ZWAC5WS"
+  },
+  "edge": {
+    "api": {
+      "suffix": "fid-EnterpriseEdge"
+    },
+    "query": {
+      "ws": {
+        "suffix": "fid-EnterpriseEdgeWS"
+      }
+    },
+    "url": "52.66.202.114",
+    "port": "8080"
+  },
+  "application": {
+    "api": {
+      "suffix": "fid-AppManagement"
+    },
+    "url": "18.221.199.94",
+    "port": "9090"
+  },
+  "data": {
+    "api": {
+      "suffix": "fid-DataManagement"
+    },
+    "url": "52.66.156.13",
+    "port": "9091"
+  }
+}

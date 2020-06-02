@@ -1,0 +1,30 @@
+@import '~src/sass/tql/variables';
+
+$search-height: 32px;
+$search-width: 200px;
+.search {
+  max-width: $search-width;
+  position: relative;
+  background-color: $cl_middle_blue !important;
+  input {
+    height: $search-height !important;
+    color: $cl_white !important;
+    background-color: $cl_middle_blue !important;
+  }
+
+  .search-icon {
+    height: $search-height;
+    width: $search-height;
+    line-height: $search-height;
+    vertical-align: middle;
+    text-align: center;
+    i {
+      color: $cl_white;
+    }
+  }
+
+  .vl {
+    border-left: 1px solid $cl_white;
+    height: calc(#{$search-height} - 6px);
+  }
+}

@@ -1,0 +1,88 @@
+<div class="details-panel">
+  <section class="details-panel-header">
+    <div class="details-panel-header__title">
+      <label>Application</label>
+      <div class="details-panel-header__name" *ngIf="application">{{application.Name.Value}}</div>
+    </div>
+  </section>
+  <section class="details-panel-body col-12">
+    <div class="row">
+      <aside class="col-12 col-md-2">
+        <div class="details-panel-body__menu-container">
+          <div class="details-panel-body__menu-item" (click)="viewContent('details')"
+               [ngClass]="{'active': currentView === 'details'}">Details
+          </div>
+          <div class="details-panel-body__menu-item" (click)="viewContent('deployedThings')"
+               [ngClass]="{'active': currentView === 'deployedThings'}">Deployment
+          </div>
+        </div>
+      </aside>
+      <main class="col-12 col-md-10" id="application-detail-body-main-content-id">
+        <div class="details-panel-body__main-content table-responsive"
+             *ngIf="application && currentView === 'details'">
+          <div class="details-panel-body__item-value col-12">
+            <dl>
+              <dt>Application download url:</dt>
+              <dd>{{application.AppDownloadURL.Value}}</dd>
+              <dt>Application version</dt>
+              <dd>{{application.Version.Value}}</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="details-panel-body__main-content table-responsive"
+             *ngIf="currentView === 'deployedThings'">
+          <div class="bulk-action mb-3 d-flex align-items-center" *ngIf="things.length">
+            <div class="tql-form-group">
+              <select class="bulk-action__list" name="bulkAction" [disabled]="!isAnyItemChecked"
+                      [(ngModel)]="bulkAction" ngModel (change)="onSelectAction()">
+                <option value="" selected>Actions</option>
+                <option value="undeploy">Undeploy</option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="!things.length">Application not deployed on any edge. Go to <a [routerLink]="['/edges']">edge
+            list ?</a></div>
+          <table class="tql-table" *ngIf="things.length">
+            <thead>
+            <tr>
+              <th>
+                <label class="tql-checkbox">
+                  <input type="checkbox" name="checkAll" (change)="onCheckAllModel($event)" [(ngModel)]="checkAll">
+                  <span class="tickmark"></span>
+                </label>
+              </th>
+              <th>Deployed At</th>
+              <th>Type</th>
+              <th>State</th>
+              <th>Version</th>
+              <th>Configuration</th>
+              <th>Install date</th>
+              <th>Last activated</th>
+              <th>Last stopped</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of things; let i=index">
+              <td>
+                <label class="tql-checkbox">
+                  <input type="checkbox" value="{{item.AStackId.Value}}" [(ngModel)]="itemsCheck[i].value"
+                         (change)="onCheckModel($event)"/>
+                  <span class="tickmark"></span>
+                </label>
+              </td>
+              <td>{{item.Name.Value}}</td>
+              <td>{{item.Type.Value}}</td>
+              <td>{{item.DeployedApp.State?.Value}}</td>
+              <td>{{applicationFromDeployment.Version.Value}}</td>
+              <td></td>
+              <td>{{item.DeployedApp.InstalledDate ? (item.DeployedApp.InstalledDate.Value | timeAgo) : 'never'}}</td>
+              <td>{{item.DeployedApp.LastActivated ? (item.DeployedApp.LastActivated.Value | timeAgo) : 'never'}}</td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </section>
+</div>

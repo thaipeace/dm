@@ -1,0 +1,218 @@
+/*
+!*color*!
+$cl_blue: #119ed9;
+$cl_white: #f3f4f4;
+$cl_red: #ee2c2c;
+$cl_green: #dc9d07;
+$cl_side_bar: #101c26;
+$cl_bg: #3e4952;
+$cl_top_bar: #1b303f;
+$cl_input: #111e28;
+$cl_input_text: #a3b9cb;
+$cl_input_text_placeholder: darken($cl_input_text, 40%);
+$cl_input_text_error: #ef2a2b;
+$cl_icon: #A3B9CB;
+$cl_panel: #1b303f;
+$cl_panel_heading: #292f38;
+$cl_h: #b1bdc7;
+$cl_alert_blue: #079fdc;
+$cl_alert_green: #dc9d07;
+$cl_alert_red: #dc2a07;
+$cl_table_1: #12222d;
+$cl_table_2: #324f64;
+$cl_table_3: #3D596C;
+$cl_table_4: #162632;
+
+!*values*!
+$height_header: 50px;
+$height_footer: 30px;
+$height_menu: 48px;
+$height_panel_heading: 50px;
+
+$width_sidebar: 70px;
+
+$theme-colors: (
+  'dark': (
+    '$cl_top_bar': #1b303f,
+    '$cl_side_bar':#101c26,
+    '$cl_side_bar_hover':#3e4952,
+    '$cl_bg':#3e4952,
+    '$cl_bar_menu_item_text':#a3b9cb,
+    '$cl_bar_menu_item_text_hover':#a3b9cb,
+    '$cl_panel': #1b303f,
+    '$cl_text': #a3b9cb,
+    '$cl_input':#111e28,
+    '$cl_input_text':#a3b9cb,
+    '$cl_input_text_placeholder':darken(#a3b9cb, 40%),
+    '$cl_table_header': #324f64,
+    '$cl_table_header_text': #a3b9cb,
+    '$cl_table_row_1': #132836,
+    '$cl_table_row_2': #061d2b,
+    '$cl_table_border': #324f64,
+    '$cl_modal_close':#999999,
+    '$cl_modal_title':#ffffff,
+    '$cl_modal_bg':#1b303f,
+    '$cl_button_text': #ffffff
+  ),
+  'light': (
+    '$cl_top_bar': #1b303f,
+    '$cl_side_bar': #0f1d27,
+    '$cl_side_bar_hover':#1b303f,
+    '$cl_bg':#f0f2f4,
+    '$cl_bar_menu_item_text':#ffffff,
+    '$cl_bar_menu_item_text_hover':#333333,
+    '$cl_panel': #ffffff,
+    '$cl_text': #333333,
+    '$cl_input':#e6e6e6,
+    '$cl_input_text':#333333,
+    '$cl_input_text_placeholder':#999999,
+    '$cl_table_header': #324f64,
+    '$cl_table_header_text': #ffffff,
+    '$cl_table_row_1': #fefefe,
+    '$cl_table_row_2': #e6e6e6,
+    '$cl_table_border': #cfcfcf,
+    '$cl_modal_close':#999999,
+    '$cl_modal_title':#333333,
+    '$cl_modal_bg':#fefefe,
+    '$cl_button_text':#333333
+  ),
+);
+
+@function theme-color($key: 'dark', $variant: '') {
+  $map: map-get($theme-colors, $key);
+  @return map-get($map, $variant);
+}
+*/
+/*color*/
+$cl_blue: #2196F3;
+$cl_blue_light: #0069c0;
+$cl_white: #ffffff;
+$cl_white_row_1: #f6f7f8;
+$cl_white_row_2: #dfe1e3;
+$cl_cream: #f0f2f4;
+$cl_light_cream: #f6f6f6;
+$cl_red: #ee2c2c;
+$cl_red_light: #b30002;
+$cl_orange: #dc9d07;
+$cl_orange_light: #a56f00;
+$cl_grey: #aeaeae;
+$cl_grey_light: #7f7f7f;
+$cl_grey_black: #cfcfcf;
+$cl_light_grey: #e6e6e6;
+$cl_grey_blue: #708990;
+$cl_black: #101c26;
+$cl_black_grey: #333333;
+$cl_space_grey: #3e4952;
+$cl_dark: #111e28;
+$cl_light_blue: #a3b9cb;
+$cl_middle_blue: #324f64;
+$cl_dark_blue: #1b303f;
+$cl_darker_blue: #132836;
+$cl_darkest_blue: #061d2b;
+$cl_dark_grey: #999999;
+$cl_input_text_placeholder: darken($cl_light_blue, 40%);
+$cl_input_text_error: #ef2a2b;
+$cl_panel_heading: #292f38;
+$cl_h: #b1bdc7;
+$cl_alert_blue: #119ed9;
+$cl_alert_green: #dc9d07;
+$cl_alert_red: #ee2c2c;
+$cl_table_1: #12222d;
+$cl_table_3: #3D596C;
+$cl_table_4: #162632;
+$btn_red_wrapper: #fae4e3;
+$btn_blue_wrapper: #e3f2fd;
+$btn_green_wrapper: #fff3e0;
+$btn_grey_wrapper: #f5f5f5;
+
+/*values*/
+$height_header: 50px;
+$height_footer: 30px;
+$height_menu: 48px;
+$height_panel_heading: 50px;
+
+$width_sidebar: 70px;
+
+$theme-colors: (
+  'dark': (
+    '$cl_top_bar': $cl_dark_blue,
+    '$cl_side_bar': $cl_black,
+    '$cl_side_bar_hover': $cl_alert_blue,
+    '$cl_bg': $cl_space_grey,
+    '$cl_bar_menu_item_text': $cl_white,
+    '$cl_bar_menu_item_text_hover': $cl_light_blue,
+    '$cl_panel': $cl_dark_blue,
+    '$cl_text': $cl_white,
+    '$cl_success': $cl_blue,
+    '$cl_warn': $cl_orange,
+    '$cl_danger': $cl_red,
+    '$cl_input': $cl_dark,
+    '$cl_input_text': $cl_white,
+    '$cl_input_text_placeholder': $cl_grey_blue,
+    '$cl_table_header': $cl_middle_blue,
+    '$cl_table_header_text': $cl_white,
+    '$cl_table_row_1': $cl_darker_blue,
+    '$cl_table_row_2': $cl_darkest_blue,
+    '$cl_table_border': $cl_middle_blue,
+    '$cl_modal_close': $cl_grey_blue,
+    '$cl_modal_title':$cl_white,
+    '$cl_modal_bg': $cl_dark_blue,
+    '$cl_button_text': $cl_white,
+    '$cl_tql_input': $cl_light_blue,
+    '$cl_input_bg': $cl_middle_blue,
+    '$cl_input_disabled': $cl_dark_blue,
+    '$cl_checkbox_text': $cl_white,
+    '$cl_radio_text': $cl_white,
+    '$cl_checkbox': $cl_dark_blue,
+    '$cl_checkbox_border': $cl_dark_grey,
+    '$cl_checkbox_checked': $cl_blue,
+    '$cl_radio_border': $cl_dark_grey,
+    '$cl_radio_bg': $cl_dark_blue,
+    '$cl_tickmark_border': $cl_white,
+    '$cl_link_breadcrumb': $cl_white,
+    '$cl_breadcrumb_active': $cl_alert_blue,
+    '$cl_menu_fixed': $cl_white
+  ),
+  'light': (
+    '$cl_top_bar': $cl_dark_blue,
+    '$cl_side_bar': $cl_black,
+    '$cl_side_bar_hover': $cl_alert_blue,
+    '$cl_bg': $cl_cream,
+    '$cl_bar_menu_item_text': $cl_white,
+    '$cl_bar_menu_item_text_hover': $cl_black_grey,
+    '$cl_panel': $cl_white,
+    '$cl_success': $cl_blue,
+    '$cl_warn': $cl_orange,
+    '$cl_danger': $cl_red,
+    '$cl_text': $cl_black_grey,
+    '$cl_input': $cl_light_grey,
+    '$cl_input_text': $cl_black_grey,
+    '$cl_input_text_placeholder': $cl_dark_grey,
+    '$cl_table_header': $cl_middle_blue,
+    '$cl_table_header_text': $cl_white,
+    '$cl_table_row_1': $cl_white_row_1,
+    '$cl_table_row_2': $cl_white_row_2,
+    '$cl_table_border': $cl_grey_black,
+    '$cl_modal_close': $cl_grey_blue,
+    '$cl_modal_title': $cl_black_grey,
+    '$cl_modal_bg': $cl_white,
+    '$cl_button_text': $cl_black_grey,
+    '$cl_tql_input': $cl_black,
+    '$cl_input_bg': $cl_light_grey,
+    '$cl_input_disabled': $cl_light_cream,
+    '$cl_checkbox_text': $cl_black_grey,
+    '$cl_radio_text': $cl_black_grey,
+    '$cl_checkbox': $cl_white,
+    '$cl_checkbox_border': $cl_dark_grey,
+    '$cl_checkbox_checked': $cl_blue,
+    '$cl_radio_border': $cl_dark_grey,
+    '$cl_radio_bg': $cl_white,
+    '$cl_tickmark_border': $cl_white,
+    '$cl_menu_fixed': $cl_black_grey
+  ),
+);
+
+@function theme-color($key: 'dark', $variant: '') {
+  $map: map-get($theme-colors, $key);
+  @return map-get($map, $variant);
+}
